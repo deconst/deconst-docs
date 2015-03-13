@@ -1,0 +1,8 @@
+---
+language: python
+python:
+- "2.7"
+install:
+- "pip install -e git+https://github.com/deconst/renderer-rst.git#egg=deconstrst"
+script:
+- deconst-render-rst
