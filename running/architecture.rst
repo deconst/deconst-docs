@@ -9,10 +9,13 @@ Terminology
 .. glossary::
 
   content repository
-    Version controlled repository containing markup that provides content for some subset of the
-    completed site. To begin, we'll assume that all of these are in ``git`` repositories on
-    `GitHub <github.com>`_. Most of our documentation will be in Sphinx reStructuredText, but the
-    developer blog will be in Markdown as part of a Jekyll site.
+    Location containing material to be included as a subset of the completed site. Often, the
+    material within will be written in a friendlier human-editable markup format such as
+    reStructuredText or Markdown.
+
+    Initially, we will support support content stored in git repositories on
+    `GitHub <github.com>`_, although our architecture will be flexible enough to integrate
+    content stored anywhere with a URL.
 
   map repository
     Version controlled repository containing plain-text documents that associate subtrees of
