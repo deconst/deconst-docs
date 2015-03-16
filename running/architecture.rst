@@ -19,8 +19,8 @@ Terminology
 
   map repository
     Version controlled repository containing plain-text documents that associate subtrees of
-    indexed content, identified by a :term:`content ID` prefix, with subtrees of :term:`paths`
-    on the presented site.
+    indexed content, identified by a :term:`content ID` prefix, with subtrees of :term:`presented
+    URLs` on the presented site.
 
   content ID
     Unique identifier assigned to a single page of content generated from a :term:`content
@@ -42,11 +42,11 @@ Terminology
       ``https://github.com/rackerlabs/developer-blog/_posts/mongodb-3.0-getting-started.md``:
       ``https://github.com/rackerlabs/developer-blog/blog/mongodb-3.0-getting-started``.
 
-  path
-  paths
-    Subpath within the final presented content of a deconst site. Includes the fully-qualified
-    domain name of the page. For example:
-    ``developer.rackspace.com/sdks/cloud-servers/getting-started/``.
+  presented URL
+  presented URLs
+    URL of a page within the final presented content of a deconst site.
+
+    Example: ``developer.rackspace.com/sdks/cloud-servers/getting-started/``.
 
   layout
     Template of common markup that surrounds each presented page with navigation, brand identity,
@@ -76,12 +76,12 @@ Components
     indexed.
 
   mapping service
-    Given a :term:`path`, return the corresponding :term:`content ID`, or an alternate path to use
-    as a redirect target. Uses the latest version of the :term:`map repository` as a source of truth
-    for performing the association.
+    Given a :term:`presented URL`, return the corresponding :term:`content ID`, or an alternate
+    destination to use as a redirect target. Uses the latest version of the :term:`map repository`
+    as a source of truth for performing the association.
 
   presenter
-    Accept HTTP requests from users. Map the requested :term:`path` to :term:`content ID` by
-    querying the :term:`mapping service`, then access the requested content using the
+    Accept HTTP requests from users. Map the requested :term:`presented URL` to :term:`content ID`
+    by querying the :term:`mapping service`, then access the requested content using the
     :term:`content service`. Inject the content into an approriate :term:`layout` and send the
     final HTML back in an HTTP response.
