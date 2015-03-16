@@ -43,7 +43,7 @@ Components
 
 .. glossary::
 
-  normalizer
+  preparer
     Process responsible for converting a :term:`content repository` into a directory tree of JSON
     documents, each of which contains one page of rendered HTML and associated metadata.
 
@@ -52,8 +52,8 @@ Components
     invoked to complete a full build of this subtree of the final site, which is then published to
     CDN and linked on the pull request.
 
-    There will be one normalizer for each supported format of :term:`content repository`; initially,
-    Sphinx and Jekyll. The normalizer will be executed by a CI/CD system on each commit to the
+    There will be one preparer for each supported format of :term:`content repository`; initially,
+    Sphinx and Jekyll. The preparer will be executed by a CI/CD system on each commit to the
     repository.
 
   content service
