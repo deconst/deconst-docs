@@ -15,7 +15,7 @@ Terminology
 
     Initially, we will support support content stored in git repositories on
     `GitHub <github.com>`_, although our architecture will be flexible enough to integrate
-    content stored anywhere with a URL.
+    content stored anywhere on a network reachable from the build system.
 
   map repository
     Version controlled repository containing plain-text documents that associate subtrees of
