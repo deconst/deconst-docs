@@ -23,13 +23,24 @@ Terminology
     on the presented site.
 
   content ID
-    Unique identifier assigned to a single page of content. By convention, these are URLs that
-    join the https URL of the GitHub repository, ``tree/branch`` if "branch" is not master, and
-    the subpath of the page within the *rendered* output of the documentation build tool. Most of
-    the architecture should treat these as opaque strings. Examples:
-    this page would be ``https://github.com/deconst/deconst-docs/running/architecture`` on master,
-    or ``https://github.com/deconst/deconst-docs/tree/glossary/running/architecture`` until this
-    pull request is merged.
+    Unique identifier assigned to a single page of content generated from a :term:`content
+    repository`. It's important to note that a content ID is assigned to each *output* page, not
+    each source document. Depending on the :term:`preparer` and its configuration, these may differ.
+    Most of the architecture should treat these as opaque strings, although the :term:`mapping
+    service` may need to assume that they are hierarchal.
+
+    By convention, these are URLs that join the base URL of the :term:`content repository` with the
+    relative path of the rendered output page.
+
+    Examples:
+
+    * The version of this page on the default "master" branch:
+      ``https://github.com/deconst/deconst-docs/running/architecture``.
+    * The version of this page on a branch called "glossary":
+      ``https://github.com/deconst/deconst-docs/tree/glossary/running/architecture``.
+    * A specific post in a Jekyll blog, generated from (theoretical) content at
+      ``https://github.com/rackerlabs/developer-blog/_posts/mongodb-3.0-getting-started.md``:
+      ``https://github.com/rackerlabs/developer-blog/blog/mongodb-3.0-getting-started``.
 
   path
   paths
