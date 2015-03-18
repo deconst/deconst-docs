@@ -1,8 +1,9 @@
 ---
 language: python
+sudo: false
 python:
 - "3.4"
 install:
-- "pip install -e git+https://github.com/deconst/renderer-rst.git#egg=deconstrst"
+- "pip install -e git+https://github.com/deconst/preparer-rst.git#egg=deconstrst"
 script:
-- deconst-render-rst
+- deconst-prepare-rst
