@@ -48,9 +48,10 @@ Terminology
 
   presented URL
   presented URLs
-    URL of a page within the final presented content of a deconst site.
+    URL of a page within the final presented content of a deconst site. This should be the full URL,
+    including the scheme and domain.
 
-    Example: ``developer.rackspace.com/sdks/cloud-servers/getting-started/``.
+    Example: ``https://developer.rackspace.com/sdks/cloud-servers/getting-started/``.
 
   layout
     Template of common markup that surrounds each presented page with navigation, brand identity,
