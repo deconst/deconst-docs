@@ -21,10 +21,13 @@ Terminology
     `GitHub <github.com>`_, although our architecture will be flexible enough to integrate
     content stored anywhere on a network reachable from the build system.
 
-  map repository
-    Version controlled repository containing plain-text documents that associate subtrees of
-    indexed content, identified by a :term:`content ID` prefix, with subtrees of :term:`presented
-    URLs` on the presented site.
+  control repository
+    Version controlled repository used to organize and administer a deconst platform. It contains:
+
+    * Plain-text documents that associate subtrees of indexed content, identified by a
+      :term:`content ID` prefix, with subtrees of :term:`presented URLs` on the presented site.
+    * Layout templates in `handlebars <http://handlebarsjs.com/>`_ format.
+    * Plain-text documents that associate subsets of :term:`presented URLs` with specific layouts.
 
   content ID
     Unique identifier assigned to a single page of content generated from a :term:`content
@@ -82,8 +85,8 @@ Components
 
   mapping service
     Given a :term:`presented URL`, return the corresponding :term:`content ID`, or an alternate
-    destination to use as a redirect target. Uses the latest version of the :term:`map repository`
-    as a source of truth for performing the association.
+    destination to use as a redirect target. Uses the latest version of the :term:`control
+    repository` as a source of truth for performing the association.
 
   presenter
     Accept HTTP requests from users. Map the requested :term:`presented URL` to :term:`content ID`
