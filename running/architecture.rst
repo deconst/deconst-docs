@@ -63,7 +63,8 @@ Terminology
   metadata envelope
   metadata envelopes
     JSON document that contains a single page's worth of content as a rendered HTML fragment, along with
-    any additional information necessary for the presentation of that page.
+    any additional information necessary for the presentation of that page. See :ref:`the schema section
+    <envelope-schema>` for a description of the expected structure.
 
 Components
 ----------
@@ -105,6 +106,8 @@ Components
     by querying the :term:`mapping service`, then access the requested :term:`metadata envelope`
     using the :term:`content service`. Inject the envelope into an approriate :term:`layout` and send the
     final HTML back in an HTTP response.
+
+.. _envelope-schema:
 
 Metadata Envelope Schema
 ------------------------
