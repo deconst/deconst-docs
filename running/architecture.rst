@@ -105,3 +105,35 @@ Components
     by querying the :term:`mapping service`, then access the requested :term:`metadata envelope`
     using the :term:`content service`. Inject the envelope into an approriate :term:`layout` and send the
     final HTML back in an HTTP response.
+
+Metadata Envelope Schema
+------------------------
+
+Much of the deconst system involves the manipulation of :term:`metadata envelopes`, the JSON documents
+produced by each :term:`preparer` that contain the actual content to render. To be presented properly,
+envelopes must adhere to a common schema.
+
+Here's a `JSON schema <http://json-schema.org/>`_ document that describes its expected structure:
+
+.. code-block:: json
+
+  {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Deconst Metadata Envelope",
+    "type": "object",
+    "properties": {
+      "body": {
+        "description": "Partially rendered HTML to be injected into a selected layout.",
+        "type": "string",
+      },
+      "required": ["body"]
+    }
+  }
+
+This is an example envelope that demonstrates the full document structure in a more concrete way:
+
+.. code-block:: json
+
+  {
+    "body": "<h1>Rendered HTML</h1>"
+  }
