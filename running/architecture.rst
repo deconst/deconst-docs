@@ -60,16 +60,22 @@ Terminology
     Template of common markup that surrounds each presented page with navigation, brand identity,
     copyright information and anything else that's shared among some subset of each site.
 
+  metadata envelope
+  metadata envelopes
+    JSON document that contains a single page's worth of content as a rendered HTML fragment, along with
+    any additional information necessary for the presentation of that page.
+
 Components
 ----------
 
 .. glossary::
 
   preparer
-    Process responsible for converting a :term:`content repository` into a directory tree of JSON
-    documents, each of which contains one page of rendered HTML and associated metadata.
+    Process responsible for converting a :term:`content repository` into a directory tree of
+    :term:`metadata envelopes`, each of which contains one page of rendered HTML and associated
+    metadata.
 
-    If the current branch is live, the generated JSON documents are then submitted to the
+    If the current branch is live, the generated envelopes are then submitted to the
     :term:`content service` for storage and indexing. Otherwise, a local :term:`presenter` is
     invoked to complete a full build of this subtree of the final site, which is then published to
     CDN and linked on the pull request.
@@ -84,9 +90,9 @@ Components
     repository` as a source of truth for performing the association.
 
   content service
-    Service that accepts submissions and queries for the most recent page content associated with a
-    specific :term:`content ID`. Content submitted here will have its structure validated and
-    indexed.
+    Service that accepts submissions and queries for the most recent :term:`metadata envelope`
+    associated with a specific :term:`content ID`. Content submitted here will have its structure
+    validated and indexed.
 
   layout service
     Given a :term:`presented URL`, return the Handlebars template that should be used to render the
@@ -96,6 +102,6 @@ Components
 
   presenter
     Accept HTTP requests from users. Map the requested :term:`presented URL` to :term:`content ID`
-    by querying the :term:`mapping service`, then access the requested content using the
-    :term:`content service`. Inject the content into an approriate :term:`layout` and send the
+    by querying the :term:`mapping service`, then access the requested :term:`metadata envelope`
+    using the :term:`content service`. Inject the envelope into an approriate :term:`layout` and send the
     final HTML back in an HTTP response.
