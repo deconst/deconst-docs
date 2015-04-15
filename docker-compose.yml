@@ -34,9 +34,11 @@ presenter:
   links:
   - content
   - mapping
+  - layout
   environment:
     CONTENT_SERVICE_URL: http://content:8080/
     MAPPING_SERVICE_URL: http://mapping:8080/
+    LAYOUT_SERVICE_URL: http://layout:8080/
     PRESENTED_URL_DOMAIN: mysite.com
     PRESENTER_LOG_LEVEL: DEBUG
   ports:
