@@ -20,7 +20,7 @@ The control repository is expected to include certain contents:
 Content Mapping Files
 ---------------------
 
-To include a new content repository on a deconst site, you'll need to add it to one of the *content mapping files* within the control repository. Content mapping files are plain-text files found anywhere within your control repository that have a filename ending in ``.map.txt``.
+To include a new content repository on a deconst site, you'll need to add it to one of the **content mapping files** within the control repository. Content mapping files are plain-text files found anywhere within your control repository that have a filename ending in ``.map.txt``.
 
 Deconst will let you organize content mapping files however you wish. The way that you name your mapping files and how you arrange them within the repository is for *your* benefit. It's best to start with a single file, but as your site grows, you'll want to decide on some convention for this among your team, so that everyone knows where to add new mappings or find specific existing ones.
 
@@ -188,6 +188,31 @@ As a complete example, this set of layouts provides basic HTML5 boilerplate, a c
 
 Mapping Layouts to Pages
 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+Once you have :ref:`layouts to render, <control-layout-syntax>`, you'll need to specify which layout will be used for any specific page.
+
+Because the :ref:`content mapping service <control-map>` only operates on *subtrees* of content, not specific pages, Deconst doesn't have enough context for you to fully map layouts to individual pages. (You don't actually *want* to, anyway: if it was done that way, authors would need to update the control repository for every single page!) Instead, you manage the mapping of **layout keys** to Handlebars layouts within a given domain and URL prefix, and the content repositories offer mechanisms to set a layout key on each page.
+
+Deconst maps layout keys using plain-text **layout mapping files** found within the control repository. Layout mapping files are identified by a filename suffix of ``.layout.txt``. Like content mapping files, you can split layout mappings across many files as your site grows, using whatever organization you wish.
+
+The layout file syntax is almost identical to :ref:`the content mapping file syntax <control-map-syntax>`: the active domain must be named within square brackets (``[ ]``), then layout key mappings for that domain are listed as whitespace-separated lines. Here's an example:
+
+.. code-block:: text
+
+  [books.horse]
+
+  # The three components are:
+  #  path prefix; layout key; path to layout template, relative to "layouts/"
+  / default shared/default.hbs
+  / blog-post books/blog-post.hbs
+  /other blog-post other/blog-post.hbs
+
+With this layout file, any pages rendered on *books.horse* that name a layout key of "default" will use the layout ``shared/default.hbs``, and most pages that use "blog-post" will be rendered with ``books/blog-post.hbs``. However, any pages beneath ``other/`` that request a layout key of "blog-post" will use the layout ``other/blog-post.hbs``, instead.
+
+ * **https://books.horse/**, which is mapped to content that uses the layout key *default*, will be rendered with ``shared/default.hbs``.
+ * **https://books.horse/news/deconst-is-working**, with the layout key *blog-post*, will be rendered with ``books/blog-post.hbs``.
+ * **https://books.horse/other/about**, with the layout key *default*, will still be rendered with ``shared/default.hbs``.
+ * **https://books.horse/other/guest-post**, with the layout key *blog-post*, will use ``other/blog-post.hbs`` instead.
 
 .. _control-layout-assets:
 
