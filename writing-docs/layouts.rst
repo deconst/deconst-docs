@@ -3,25 +3,25 @@
 Layouts
 -------
 
-The visual identity, navigation, and HTML boilerplate used for each page rendered by Deconst is provided by a set of *layout templates* that are managed within the control repository. Layout templates are written in `Handlebars <http://handlebarsjs.com/>`_ syntax and must be placed in a directory called ``layouts`` at the root of the control repository. Layout template files should usually end with a ``.hbs`` extension.
+The visual identity, navigation, and HTML boilerplate used for each page rendered by Deconst is provided by a set of *layout templates* that are managed within the control repository. Layout templates are written in `Handlebars <http://handlebarsjs.com/>`_ syntax and must be placed in a directory called ``layouts`` at the root of the control repository. Layout template files should usually end with an ``.hbs`` extension.
 
 .. _control-layout-syntax:
 
 Layout Syntax Extensions
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-There are several special helpers and variables that are made available to each layout as it's rendered. Use these to indicate where content is to be rendered.
+There are several special helpers and variables that are made available to each layout as it's rendered. Use these to indicate where content from the :term:`metadata envelope` is to be placed.
 
  * ``{{{ envelope.body }}}``: This one is very important: it'll be replaced by the actual content of the page.
  * ``{{ envelope.title }}``: The name of the page, if one has been provided.
- * ``{{{ assets.js_xyz_url }}}``: The final https CDN URL of the JavaScript asset bundle from the "xyz" subdirectory. See :ref:`the assets section <control-layout-assets>` for more detail.
- * ``{{{ assets.css_xyz_url }}}``: The same thing for CSS assets.
+ * ``{{{ assets.js_xyz_url }}}``: The final https CDN URL of the JavaScript asset bundle from the "xyz" subdirectory. See :ref:`the assets section <control-layout-assets>` for more details.
+ * ``{{{ assets.css_xyz_url }}}``: The same thing a CSS asset bundle.
  * ``{{{ assets.image_xyz_jpg_url }}}``: The asset URL for an image asset.
  * ``{{{ assets.font_xyz_tff_url }}}``: The asset URL for a font asset.
 
 Additionally, Deconst accepts a small number of preprocessing directives that you can use to eliminiate redundancy among your templates.
 
- * ``[@ path/to/outer.hbs @]`` will embed the current layout within another layout. This layout will be placed whereever the *{{{ envelope.body }}}* directive is found within the outer layout -- this allows you to outer template directly, if you so choose. This directive **must** be the first line in the template file.
+ * ``[@ path/to/outer.hbs @]`` will embed the current layout within another layout. This directive **must** be the first line in the template file. This layout will be placed whereever the *{{{ envelope.body }}}* directive is found within the outer layout -- this allows you to also use the outer template directly, if you so choose. If *envelope.body* is never included, a warning will be emitted.
  * ``[+ path/to/common.hbs +]`` will include the contents of another layout at this point within the current layout.
 
 .. note::
@@ -79,9 +79,9 @@ As a complete example, this set of layouts provides basic HTML5 boilerplate, a c
 Mapping Layouts to Pages
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Once you have :ref:`layouts to render, <control-layout-syntax>`, you'll need to specify which layout will be used for any specific page.
+Once you have :ref:`layouts to render <control-layout-syntax>`, you'll need to specify which layout will be used for any specific page.
 
-Because the :ref:`content mapping service <control-map>` only operates on *subtrees* of content, not specific pages, Deconst doesn't have enough context for you to fully map layouts to individual pages. (You don't actually *want* to, anyway: if it was done that way, authors would need to update the control repository for every single page!) Instead, you manage the mapping of **layout keys** to Handlebars layouts within a given domain and URL prefix, and the content repositories offer mechanisms to set a layout key on each page.
+Because the :ref:`content mapping service <control-map>` only operates on *subtrees* of content, not specific pages, Deconst doesn't have enough context for you to fully map layouts to individual pages. (You don't actually want to, anyway: if it was done that way, authors would need to update the control repository for every single page!) Instead, you manage the mapping of **layout keys** to Handlebars layouts within a given domain and URL prefix, and the content repositories offer mechanisms to set a layout key on each page.
 
 Deconst maps layout keys using plain-text **layout mapping files** found within the control repository. Layout mapping files are identified by a filename suffix of ``.layout.txt``. Like content mapping files, you can split layout mappings across many files as your site grows, using whatever organization you wish.
 
