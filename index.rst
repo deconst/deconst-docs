@@ -24,7 +24,6 @@ This guide serves two purposes:
 Contents:
 
 .. toctree::
-   :maxdepth: 2
 
    writing-docs/index
    running/index
@@ -33,5 +32,4 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
