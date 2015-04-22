@@ -91,7 +91,7 @@ Before any mappings are introduced within the file, you must specify the current
 
 Each mapping consists of the *presented URL prefix* and the *content ID prefix* on a single line, separated by whitespace.
 
-It's an error to map the exact same prefix on the same domain more than once. This is to prevent you from accidentally clobbering your own mappings by mistake once your site is mapped across many mapping files!
+It's an error to map the exact same prefix on the same domain more than once. This is to prevent you from accidentally clobbering your own mappings by mistake once your site spans many mapping files! You'll see build errors in the Travis build for your pull request, along with any other syntax problems that were discovered.
 
 .. note::
 
