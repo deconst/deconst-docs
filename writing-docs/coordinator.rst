@@ -13,7 +13,7 @@ The control repository is expected to include certain contents:
  * At least one :ref:`content mapping file <control-map>` that tells Deconst which content to display where.
  * :ref:`Layout templates <control-layout>` that give individual pages visual identity.
  * :ref:`Layout mapping files <control-layout-map>` that specify which layout template should be used to render a specific page.
- * :ref:`Global assets <control-assets>` such as stylesheets, JavaScript files, or images that are referenced by the layout templates.
+ * :ref:`Global assets <control-layout-assets>` such as stylesheets, JavaScript files, or images that are referenced by the layout templates.
 
 .. _control-map:
 
@@ -110,23 +110,89 @@ You can remove a content repository by removing all mappings that reference its 
 
 .. _control-layout:
 
-Creating a Layout
------------------
+Layouts
+-------
+
+The visual identity, navigation, and HTML boilerplate used for each page rendered by Deconst is provided by a set of *layout templates* that are managed within the control repository. Layout templates are written in `Handlebars <http://handlebarsjs.com/>`_ syntax and must be placed in a directory called ``layouts`` at the root of the control repository. Layout template files should usually end with a ``.hbs`` extension.
 
 .. _control-layout-syntax:
 
-Layout Template Syntax
-^^^^^^^^^^^^^^^^^^^^^^
+Layout Syntax Extensions
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+There are several special helpers and variables that are made available to each layout as it's rendered. Use these to indicate where content is to be rendered.
+
+ * ``{{{ envelope.body }}}``: This one is very important: it'll be replaced by the actual content of the page.
+ * ``{{ envelope.title }}``: The name of the page, if one has been provided.
+ * ``{{{ assets.js_xyz_url }}}``: The final https CDN URL of the JavaScript asset bundle from the "xyz" subdirectory. See :ref:`the assets section <control-layout-assets>` for more detail.
+ * ``{{{ assets.css_xyz_url }}}``: The same thing for CSS assets.
+ * ``{{{ assets.image_xyz_jpg_url }}}``: The asset URL for an image asset.
+ * ``{{{ assets.font_xyz_tff_url }}}``: The asset URL for a font asset.
+
+Additionally, Deconst accepts a small number of preprocessing directives that you can use to eliminiate redundancy among your templates.
+
+ * ``[@ path/to/outer.hbs @]`` will embed the current layout within another layout. This layout will be placed whereever the *{{{ envelope.body }}}* directive is found within the outer layout -- this allows you to outer template directly, if you so choose. This directive **must** be the first line in the template file.
+ * ``[+ path/to/common.hbs +]`` will include the contents of another layout at this point within the current layout.
+
+.. note::
+
+  For both of these directives, the path to the other layout must be relative to the ``layouts/`` directory within the control repository.
+
+As a complete example, this set of layouts provides basic HTML5 boilerplate, a common sidebar that may be shared among several layouts, and a specialized layout for blog posts.
+
+``layouts/books.horse/boilerplate.hbs``
+
+.. code-block:: html
+
+  <!doctype html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>{{ envelope.title }}</title>
+      <link href="{{ assets.css_books_url }}" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+      {{{ envelope.body }}}
+
+      <script src="{{ assets.js_books_url }}"></script>
+    </body>
+  </html>
+
+``layouts/books.horse/common/sidebar.hbs``
+
+.. code-block:: html
+
+  <ul class="sidebar">
+    <li>First Item</li>
+    <li>Second Item</li>
+    <li>Third Item</li>
+  </ul>
+
+``layouts/books.horse/blog-post.hbs``
+
+.. code-block:: html
+
+  [@ books.horse/boilerplate.hbs @]
+
+  <div class="blog">
+    <h1>This is a Blog Post</h1>
+
+    <div class="content">
+      {{{ envelope.body }}}
+    </div>
+
+    [+ books.horse/common/sidebar.hbs +]
+  </div>
 
 .. _control-layout-map:
 
 Mapping Layouts to Pages
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. _control-assets:
+.. _control-layout-assets:
 
 Layout Assets
--------------
+^^^^^^^^^^^^^
 
 Troubleshooting
 ---------------
