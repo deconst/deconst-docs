@@ -8,7 +8,7 @@ Deconst
 
 *Deconstruct your Documentation*
 
-`Deconst <https://github.com/deconst>`_ is a continuous delivery pipeline used to assemble documentation from a heterogenous set of source repositories. Individual GitHub repositories containing content in :abbr:`.rst (reStructuredText)` or :abbr:`.md (Markdown)` formats are **rendered** into a common JSON format, then mapped to subtrees of the final page by a **page map**, a plaintext file stored in its own repository.
+`Deconst <https://github.com/deconst>`_ is a continuous delivery pipeline used to assemble documentation from a heterogenous set of source repositories. Individual GitHub repositories containing content in :abbr:`.rst (reStructuredText)` or :abbr:`.md (Markdown)` formats are **prepared** by being partially rendered to a common JSON format, then mapped to subtrees of the final page by a **control repository**, a plaintext file stored in its own repository.
 
 This guide serves two purposes:
 
