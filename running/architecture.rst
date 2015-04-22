@@ -30,6 +30,7 @@ Terminology
     * Plain-text documents that associate subsets of :term:`presented URLs` with specific layouts.
 
   content ID
+  content IDs
     Unique identifier assigned to a single page of content generated from a :term:`content
     repository`. It's important to note that a content ID is assigned to each *output* page, not
     each source document. Depending on the :term:`preparer` and its configuration, these may differ.
