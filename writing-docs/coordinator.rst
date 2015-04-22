@@ -296,12 +296,9 @@ Bower
 
 If any CSS or JavaScript bundle directory contains a file called ``bower.json``, bower will be invoked first to install any dependencies declared that way. You can reference bower-installed files by using their full ``bower_component/`` paths in the JavaScript index file or an ``@include`` directive.
 
-.. warning:
+.. warning::
 
   Storing assets within the control repository will add a bit of overhead to *every* page render! Only put assets here that are used by your layout templates. Content repository assets should be added to the content repository that uses them.
-
-Troubleshooting
----------------
 
 .. _control-webhooks:
 
