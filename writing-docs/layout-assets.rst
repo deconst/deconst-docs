@@ -3,14 +3,14 @@
 Assets
 ------
 
-Raw HTML isn't very exciting on its own. To make a site look good and behave sensibly, you'll need to include assets CSS, JavaScript, images and possibly fonts. Deconst sites store these with a specific structure beneath the ``assets`` subdirectory of the control repository.
+Raw HTML isn't very exciting on its own. To make a site look good and behave sensibly, you'll need to include assets: CSS, JavaScript, images and possibly fonts. Deconst sites store these with a specific structure beneath the ``assets`` subdirectory of the control repository.
 
-CSS and JavaScript assets are grouped into *bundles*: sets of files that will be preprocessed together in some way to produce a single, optimized artifact, published on the CDN. Each bundle corresponds to, and is named after, one immediate subdirectory of the ``assets/js`` or ``assets/less`` directories.
+CSS and JavaScript assets are grouped into *bundles*: sets of files that will be preprocessed together in some way to produce a single, optimized artifact, published on the CDN. Each bundle corresponds to, and is takes its name from, one immediate subdirectory of the ``assets/js`` or ``assets/less`` directories.
 
 CSS
 ^^^
 
-Deconst supports the generation of CSS from source files written in `Less <http://lesscss.org/>`_. Write your .less files within a subdirectory of ``assets/less`` named after the bundle. You **must** include a file called ``main.less`` to serve as the entry point for that bundle. From ``main.less``, you can ``@include`` whatever other files you wish to include.
+Deconst supports the generation of CSS from source files written in `Less <http://lesscss.org/>`_. Write your .less files within a subdirectory of ``assets/less`` with a name that will be used to name that bundle. You **must** include a file called ``main.less`` to serve as the entry point for that bundle. From ``main.less``, you can ``@include`` whatever other files you wish to include.
 
 Given a Less bundle containing:
 
@@ -32,7 +32,7 @@ These files will create a published asset that you can reference in your layouts
 JavaScript
 ^^^^^^^^^^
 
-JavaScript files should be placed in a subdirectory of ``assets/js`` named after the bundle. You **must** include a file called ``index`` that lists the JavaScript files that should be included in the bundle,
+JavaScript files should be placed in a subdirectory of ``assets/js`` with a directory name that will become the name of your bundle. You **must** include a file called ``index`` that lists the JavaScript files that should be included in the bundle,
 
 Given a JavaScript bundle containing:
 
@@ -49,7 +49,7 @@ Where the "index" file contains:
   components/dropdown.js
   app.js
 
-These files will be concatenated (including ``app.js`` before ``dropdown.js``), minified, fingerprinted, and published the CDN, and its public https URL will be made available to your layouts as a Handlebars variable called ``{{ assets.js_books_url }}``. You can then include it within the appropriate layouts using something like:
+These files will be concatenated (including ``dropdown.js`` first, then ``app.js``), minified, fingerprinted, and published to the CDN. The resulting public https URL will be made available to your layouts as a Handlebars variable called ``{{ assets.js_books_url }}``. You can then include it within the appropriate layouts using something like:
 
 .. code-block:: html
 
@@ -58,7 +58,7 @@ These files will be concatenated (including ``app.js`` before ``dropdown.js``), 
 Images and Fonts
 ^^^^^^^^^^^^^^^^
 
-All files beneath ``assets/images`` and ``assets/fonts`` will be published as-is to the CDN. Their https URLs will then be made available to both the layouts and the Less stylesheets.
+All files beneath ``assets/images`` and ``assets/fonts`` will be published as-is to the CDN. Their https URLs can then be used by both the layouts and the Less stylesheets.
 
 Given the following asset files:
 
