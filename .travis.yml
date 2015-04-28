@@ -5,4 +5,4 @@ python:
 install:
 - "pip install -e git+https://github.com/deconst/preparer-sphinx.git#egg=deconstrst"
 script:
-- deconst-prepare-sphinx
+- deconst-preparer-sphinx
