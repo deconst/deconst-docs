@@ -160,6 +160,23 @@ Here's a `JSON schema <http://json-schema.org/>`_ document that describes its ex
         "type": "array",
         "items": { "type": "string" },
       },
+      "disqus": {
+        "type": "object",
+        "properties": {
+          "include": {
+            "type": "boolean",
+            "description": "If true, a layout may render Disqus integration Javascript."
+          },
+          "short_name": {
+            "type": "string",
+            "description": "The 'short name' assigned to the Disqus account."
+          },
+          "embed": {
+            "type": "boolean",
+            "description": "If true, Javascript will be generated to embed a Disqus comment form on this page. Otherwise, the script to generate comment counts will be injected instead."
+          }
+        },
+      },
       "required": ["body"]
     }
   }
