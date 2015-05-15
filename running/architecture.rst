@@ -177,6 +177,26 @@ Here's a `JSON schema <http://json-schema.org/>`_ document that describes its ex
           }
         },
       },
+      "next": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "url": { "type": "string" }
+        },
+        "required": ["title", "url"]
+      },
+      "previous": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "url": { "type": "string" }
+        },
+        "required": ["title", "url"]
+      },
+      "queries": {
+        "description": "Render-time queries for other content to perform dynamically, during page render. See 'results' in the content document below.",
+        "type": "object"
+      },
       "required": ["body"]
     }
   }
@@ -195,5 +215,30 @@ This is an example envelope that demonstrates the full document structure in a m
       "include": true,
       "short_name": "devblog",
       "embed": true
+    },
+    "next": {
+      "title": "The next article",
+      "url": "/blog/next-article"
+    },
+    "previous": {
+      "title": "The previous article",
+      "url": "/blog/previous-article"
+    }
+  }
+
+The documents retrieved from the content store consist of the requested envelope, plus a number of additional attributes that are derived and injected at retrieval time. The full content document looks like this:
+
+.. code-block:: json
+
+  {
+    "envelope": {},
+    "assets": {
+      "page_css_url": "https://...",
+      "page_js_url": "https://..."
+    },
+    "has_next_or_previous": true,
+    "presented_url": "https://...",
+    "results": {
+      "queryname": []
     }
   }
