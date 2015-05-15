@@ -192,6 +192,7 @@ This is an example envelope that demonstrates the full document structure in a m
     "bio": "He's just this guy, you know?",
     "publish_date": "Fri, 15 May 2015 18:32:45 GMT",
     "disqus": {
+      "include": true,
       "short_name": "devblog",
       "embed": true
     }
