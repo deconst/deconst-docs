@@ -8,5 +8,5 @@ If you want to manage or produce content that's published as part of a deconst s
 
 .. toctree::
 
-  author
-  coordinator
+  author/index
+  coordinator/index
