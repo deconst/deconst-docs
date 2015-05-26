@@ -50,7 +50,7 @@ To configure the continuous deployment process for your content repository, plac
   script:
   - deconst-preparer-sphinx
 
-Now, visit `Travis <https://travis-ci.org/>`, and choose "Accounts" from the drop-down menu in the upper right:
+Now, visit `Travis <https://travis-ci.org/>`_ and choose "Accounts" from the drop-down menu in the upper right:
 
 .. image:: /_images/travis-account-menu.png
 
