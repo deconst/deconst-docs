@@ -1,2 +1,0 @@
-Authoring Content for Deconst
-=============================
