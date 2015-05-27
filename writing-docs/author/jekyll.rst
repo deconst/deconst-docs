@@ -70,8 +70,11 @@ To configure the continuous deployment process for your content repository, plac
   ruby:
   - "2.2.0"
   install:
+  - gem install bundler
   - git clone https://github.com/deconst/preparer-jekyll.git /tmp/preparer-jekyll
-  - cd /tmp/preparer-jekyll && rake install
+  - cd /tmp/preparer-jekyll
+  - rake install
+  - cd ${TRAVIS_BUILD_DIR}
   script:
   - deconst-preparer-jekyll
 
