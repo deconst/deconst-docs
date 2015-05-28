@@ -148,13 +148,17 @@ Here's a `JSON schema <http://json-schema.org/>`_ document that describes its ex
         "type": "string"
       },
       "layout_key": {
-        "description": "Associate this page with a layout in the control repository by a key. The exact layout chosen will be determined by the layout mapping service at page-rendering time.",
+        "description": "Associate this page with a layout in the control repository by a key. The exact layout chosen will be determined by the layout mapping service at page-rendering time. If absent or falsy, the body will be rendered as-is with no decoration.",
         "type": "string"
       },
       "title": {
         "description": "The page title or blog post name used for this document.",
         "type": "string"
       },
+      "content_type": {
+        "description": "If specified, set the Content-Type of the response containing this document. Defaults to text/html; charset=utf-8.",
+        "type": "string"
+      }
       "author": {
         "description": "Name of the author who wrote this content.",
         "type": "string"
