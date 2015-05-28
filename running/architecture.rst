@@ -97,15 +97,15 @@ Components
     Sphinx and Jekyll. The preparer will be executed by a CI/CD system on each commit to the
     repository.
 
-  mapping service
-    Given a :term:`presented URL`, return the corresponding :term:`content ID`, or an alternate
-    destination to use as a redirect target. Uses the latest version of the :term:`control
-    repository` as a source of truth for performing the association.
-
   content service
     Service that accepts submissions and queries for the most recent :term:`metadata envelope`
     associated with a specific :term:`content ID`. Content submitted here will have its structure
     validated and indexed.
+
+  mapping service
+    Given a :term:`presented URL`, return the corresponding :term:`content ID`, or an alternate
+    destination to use as a redirect target. Uses the latest version of the :term:`control
+    repository` as a source of truth for performing the association.
 
   layout service
     Given a :term:`presented URL`, return the Handlebars template that should be used to render the
