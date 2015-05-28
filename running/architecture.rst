@@ -1,11 +1,21 @@
 Architecture
 ============
 
-Deconst is distributed as a set of Docker containers, deployed by an Ansible playbook.
+Deconst is distributed as a set of Docker containers, deployed to a cluster of CoreOS hosts by an Ansible playbook. Containers are organized into sets of linked services called "pods." Deconst can be scaled by both launching additional worker hosts and by starting a greater number of pods on each host.
 
-This is our initial architecture:
+.. note::
 
-.. image:: /_images/deconst-initial.png
+  The name "pod" is taken from Kubernetes, but I'm using it to mean something slightly different here. A Kubernetes pod is also a set of related containers, but they share networking and cgroup attributes, which our pods do not do. The containers within a Deconst pod are only related by regular Docker network links.
+
+This is how the world interacts with a Deconst cluster:
+
+.. image:: /_images/deconst-external.png
+
+None of the service containers store any internal, persistent state: the sources of truth for all Deconst state are Cloud Files containers, MongoDB collections, or GitHub repositories.
+
+Each pod includes the following arrangement of interlinked service containers:
+
+.. image:: /_images/deconst-internal.png
 
 Terminology
 -----------
