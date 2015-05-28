@@ -132,7 +132,7 @@ Here's a `JSON schema <http://json-schema.org/>`_ document that describes its ex
         "type": "string"
       },
       "layout_key": {
-        "description": "Associate this page with a layout in the control repository by a key. The exact layout chosen will be determined by the layout mapping service at page-rendering time.",
+        "description": "Associate this page with a layout in the control repository by a key. The exact layout chosen will be determined by the layout mapping service at page-rendering time. If absent, the body will be rendered as-is with no decoration.",
         "type": "string"
       },
       "title": {
