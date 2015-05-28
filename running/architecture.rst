@@ -11,7 +11,7 @@ This is how the world interacts with a Deconst cluster:
 
 .. image:: /_images/deconst-external.png
 
-None of the service containers store any internal, persistent state: the sources of truth for all Deconst state are Cloud Files containers, MongoDB collections, or GitHub repositories.
+None of the service containers store any internal, persistent state: the sources of truth for all Deconst state are Cloud Files containers, MongoDB collections, or GitHub repositories. This means that you can adaptively destroy or launch Deconst worker hosts without fear of losing information.
 
 Each pod includes the following arrangement of interlinked service containers:
 
