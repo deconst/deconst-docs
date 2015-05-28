@@ -113,6 +113,12 @@ Components
     of truth for both associating a layout with a specific page, and for the layout templates
     themselves.
 
+  webhook service
+    Listen for webhook notifications from the control repository. When a push has been performed, the webhook service updates a known key in etcd. Effectively, this will broadcast the change to every :term:`etcd watcher` across the entire cluster.
+
+  etcd watcher
+    When *any* :term:`webhook service` has received a push notification, perform a ``POST`` against both the :term:`mapping service` and :term:`layout service` within the same pod, to prompt each to refresh its view of the :term:`control repository`.
+
   presenter
     Accept HTTP requests from users. Map the requested :term:`presented URL` to :term:`content ID`
     by querying the :term:`mapping service`, then access the requested :term:`metadata envelope`
