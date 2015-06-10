@@ -155,10 +155,14 @@ Here's a `JSON schema <http://json-schema.org/>`_ document that describes its ex
         "description": "The page title or blog post name used for this document.",
         "type": "string"
       },
+      "toc": {
+        "description": "The table of contents for this page as rendered HTML.",
+        "type": "string"
+      },
       "content_type": {
         "description": "If specified, set the Content-Type of the response containing this document. Defaults to text/html; charset=utf-8.",
         "type": "string"
-      }
+      },
       "author": {
         "description": "Name of the author who wrote this content.",
         "type": "string"
@@ -231,6 +235,7 @@ This is an example envelope that demonstrates the full document structure in a m
     "title": "SDKs &amp; Tools",
     "author": "Ash Wilson",
     "bio": "He's just this guy, you know?",
+    "toc": "<ul>\n<li><a href=\"#\">Top</a></li><li><a href=\"#section\">Section</a></li></ul>",
     "publish_date": "Fri, 15 May 2015 18:32:45 GMT",
     "disqus": {
       "include": true,
