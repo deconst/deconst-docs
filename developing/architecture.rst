@@ -61,5 +61,35 @@ Components
   presenter
     Accept HTTP requests from users. Map the requested :term:`presented URL` to :term:`content ID`
     by querying the :term:`mapping service`, then access the requested :term:`metadata envelope`
-    using the :term:`content service`. Inject the envelope into an appropriate :term:`layout` and send the
-    final HTML back in an HTTP response.
+    using the :term:`content service`. Inject the envelope into an appropriate :term:`layout` and send the final HTML back in an HTTP response.
+
+Lifecycle of an HTTP Request
+----------------------------
+
+When an HTTP request hits the :term:`presenter`:
+
+1. The :term:`presenter` queries the :term:`mapping service` with the :term:`presented URL`. The :term:`mapping service` responds with the :term:`content ID` of the content that should be rendered at that path.
+2. Next, the presenter queries the :term:`content service` to acquire the content for that ID. The content service locates the appropriate :term:`metadata envelope`, all site-wide assets, and performs any necessary post-processing.
+3. Armed with the content ID and a layout key from the metadata envelope, the presenter queries the :term:`layout service` to find the Handlebars :term:`layout` that should be used to decorate the raw content. If no layout key is present, this request is skipped and a null layout (that renders the envelope's body directly) is used.
+4. Meanwhile, any "related documents" that are requested by the envelope will be queried from the :term:`content service`.
+5. The presenter renders the metadata envelope using the layout. The resulting HTML document is returned to the user.
+
+Lifecycle of a Control Repository Update
+----------------------------------------
+
+When a change is merged into the live branch of the :term:`control repository`:
+
+1. A Travis CI build executes the asset :term:`preparer` on the latest commit of the repository. Stylesheets, javascript, images, and fonts found within the ``assets`` directory are compiled, concatenated, minified, and submitted to the :term:`content service` to be fingerprinted, stored on the CDN-enabled asset container, and made available as global assets to all metadata envelopes.
+2. Meanwhile, a GitHub webhook is fired. One :term:`webhook service` within the deconst cluster receives a ``POST`` and validates its payload.
+3. The webhook service writes to an etcd key on the etcd cluster.
+4. *Every* :term:`etcd watcher` service across the cluster is notified, and sends a ``POST`` to the ``/refresh`` endpoint of the :term:`mapping service` and :term:`layout service` within the same pod.
+5. Each :term:`mapping service` and :term:`layout service` performs a shallow git clone of the control repository's new state and parses the relevant mapping information from certain files. As soon as the parsing completes successfully, the new state is live.
+
+Lifecycle of a Content Repository Update
+----------------------------------------
+
+When a change is merged into the live branch of a :term:`content repository`:
+
+1. A Travis CI build executes the appropriate :term:`preparer` on the latest commit of the repository.
+2. The preparer generates a :term:`metadata envelope` for each page that would be rendered, assigns it a :term:`content ID` using a configured base ID, and submits it to the :term:`content service`.
+3. Each static resource (images, mostly) are submitted to the :term:`content service` and published to the CDN as non-global assets. The response includes the CDN URL, which is then used within the generated envelopes.
