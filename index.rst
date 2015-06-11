@@ -27,6 +27,7 @@ Contents:
 
    writing-docs/index
    running/index
+   developing/index
 
 Indices and tables
 ==================
