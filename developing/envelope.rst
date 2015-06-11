@@ -3,103 +3,9 @@
 Metadata Envelope Schema
 ========================
 
-Much of the deconst system involves the manipulation of :term:`metadata envelopes`, the JSON documents
-produced by each :term:`preparer` that contain the actual content to render. To be presented properly,
-envelopes must adhere to a common schema.
+Much of the deconst system involves the manipulation of :term:`metadata envelopes`, the JSON documents produced by each :term:`preparer` that contain the actual content to render. To be presented properly, envelopes must adhere to a common schema.
 
-Here's a `JSON schema <http://json-schema.org/>`_ document that describes its expected structure:
-
-.. code-block:: json
-
-  {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "Deconst Metadata Envelope",
-    "type": "object",
-    "properties": {
-      "body": {
-        "description": "Partially rendered HTML to be injected into a selected layout.",
-        "type": "string"
-      },
-      "layout_key": {
-        "description": "Associate this page with a layout in the control repository by a key. The exact layout chosen will be determined by the layout mapping service at page-rendering time. If absent or falsy, the body will be rendered as-is with no decoration.",
-        "type": "string"
-      },
-      "title": {
-        "description": "The page title or blog post name used for this document.",
-        "type": "string"
-      },
-      "toc": {
-        "description": "The table of contents for this page as rendered HTML.",
-        "type": "string"
-      },
-      "content_type": {
-        "description": "If specified, set the Content-Type of the response containing this document. Defaults to text/html; charset=utf-8.",
-        "type": "string"
-      },
-      "author": {
-        "description": "Name of the author who wrote this content.",
-        "type": "string"
-      },
-      "bio": {
-        "description": "Brief paragraph describing the author.",
-        "type": "string"
-      },
-      "publish_date": {
-        "description": "Approximate timestamp on which this piece of content was published, formatted as an RFC2822 string.",
-        "type": "string",
-      },
-      "tags": {
-        "description": "Content classification strings that may be normalized or supplemented with machine-generated information.",
-        "type": "array",
-        "items": { "type": "string" },
-      },
-      "categories": {
-        "description": "Content classification strings that are explicitly user-provided and chosen from a list fixed in the control repository.",
-        "type": "array",
-        "items": { "type": "string" },
-      },
-      "disqus": {
-        "type": "object",
-        "properties": {
-          "include": {
-            "type": "boolean",
-            "description": "If true, a layout may render Disqus integration Javascript."
-          },
-          "short_name": {
-            "type": "string",
-            "description": "The 'short name' assigned to the Disqus account."
-          },
-          "embed": {
-            "type": "boolean",
-            "description": "If true, Javascript will be generated to embed a Disqus comment form on this page. Otherwise, the script to generate comment counts will be injected instead."
-          }
-        },
-      },
-      "next": {
-        "type": "object",
-        "properties": {
-          "title": { "type": "string" },
-          "url": { "type": "string" }
-        },
-        "required": ["title", "url"]
-      },
-      "previous": {
-        "type": "object",
-        "properties": {
-          "title": { "type": "string" },
-          "url": { "type": "string" }
-        },
-        "required": ["title", "url"]
-      },
-      "queries": {
-        "description": "Render-time queries for other content to perform dynamically, during page render. See 'results' in the content document below.",
-        "type": "object"
-      },
-      "required": ["body"]
-    }
-  }
-
-This is an example envelope that demonstrates the full document structure in a more concrete way:
+This is an example envelope that demonstrates the full document structure, including all optional fields:
 
 .. code-block:: json
 
@@ -125,7 +31,65 @@ This is an example envelope that demonstrates the full document structure in a m
     }
   }
 
-The documents retrieved from the content store consist of the requested envelope, plus a number of additional attributes that are derived and injected at retrieval time. The full content document looks like this:
+.. glossary::
+
+  body
+    The only required field for a valid envelope. It contains the pre-rendered HTML of the page.
+
+  layout_key
+    Associate this page with a layout in the control repository by a key. The exact layout chosen will be determined by the layout mapping service at page-rendering time. If absent or falsy, the body will be rendered as-is with no decoration.
+
+  title
+    The page title or blog post name used for this document.
+
+  toc
+    The table of contents for this page as a fragment of rendered HTML.
+
+  content_type
+    If specified, set the Content-Type of the response containing this document. Defaults to text/html; charset=utf-8.
+
+  author
+    Name of the author who wrote this content.
+
+  bio
+    A brief paragraph describing the :term:`author`.
+
+  publish_date
+    Approximate timestamp on which this piece of content was published, formatted as an RFC2822 string.
+
+  tags
+    An array of content classification strings that may be normalized or supplemented with machine-generated information.
+
+  categories
+    An array of content classification strings that are explicitly user-provided and chosen from a list fixed in the control repository.
+
+  disqus
+    An object that controls the inclusion of Disqus comments on the current page. If present, must be an object with the following structure:
+
+    .. code-block:: json
+
+      "disqus": {
+        "include": true,
+        "short_name": "devblog",
+        "embed": true
+      }
+
+    **include** toggles the inclusion of any Disqus content at all. **short_name** is used to link to a specific Disqus account. **embed** toggles the included script between an *embedding script* that injects a Disqus comment form on this page and a *count script* that decorates links with a comment count.
+
+  next
+  previous
+    These objects, if included, provide navigational links to adjacent documents in a sequence. If present, must be an object with the following structure:
+
+    .. code-block:: json
+
+      "next": {
+        "title": "page title",
+        "url": "../next-page"
+      }
+
+    If the ``url`` key is absolute (rooted at the document root, like ``/blog/other-post``), the presenter will re-root it based on the current mapping of the content repository. If it's relative, it will be left as-is.
+
+The documents retrieved from the content store consist of the requested envelope and a number of additional attributes that are derived and injected at retrieval time. The full content document looks like this:
 
 .. code-block:: json
 
