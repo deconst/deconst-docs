@@ -50,9 +50,9 @@ Lifecycle of an HTTP Request
 
 When an HTTP request hits the :term:`presenter`:
 
-1. The :term:`presenter` queries the :term:`mapping service` with the :term:`presented URL`. The :term:`mapping service` responds with the :term:`content ID` of the content that should be rendered at that path.
+1. The :term:`presenter` queries its content map with the :term:`presented URL` to discover the :term:`content ID` of the content that should be rendered at that path.
 2. Next, the presenter queries the :term:`content service` to acquire the content for that ID. The content service locates the appropriate :term:`metadata envelope`, all site-wide assets, and performs any necessary post-processing.
-3. Armed with the content ID and a layout key from the metadata envelope, the presenter queries the :term:`layout service` to find the Handlebars :term:`layout` that should be used to decorate the raw content. If no layout key is present, this request is skipped and a null layout (that renders the envelope's body directly) is used.
+3. Armed with the content ID and a layout key from the metadata envelope, the presenter locates the Nunjucks :term:`layout` that should be used to decorate the raw content. If no layout key is present, this request is skipped and a null layout (that renders the envelope's body directly) is used.
 4. Meanwhile, any "related documents" that are requested by the envelope will be queried from the :term:`content service`.
 5. The presenter renders the metadata envelope using the layout. The resulting HTML document is returned to the user.
 
