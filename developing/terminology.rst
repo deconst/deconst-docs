@@ -28,8 +28,7 @@ It's important to have a shared vocabulary when talking about complicated softwa
     Unique identifier assigned to a single page of content generated from a :term:`content
     repository`. It's important to note that a content ID is assigned to each *output* page, not
     each source document. Depending on the :term:`preparer` and its configuration, these may differ.
-    Most of the architecture should treat these as opaque strings, although the :term:`mapping
-    service` may need to assume that they are hierarchal.
+    Most of the architecture should treat these as opaque strings, although the content map may need to assume that they are hierarchal.
 
     By convention, these are URLs that join the base URL of the :term:`content repository` with the
     relative path of the rendered output page.
@@ -57,6 +56,4 @@ It's important to have a shared vocabulary when talking about complicated softwa
 
   metadata envelope
   metadata envelopes
-    JSON document that contains a single page's worth of content as a rendered HTML fragment, along with
-    any additional information necessary for the presentation of that page. See :ref:`the schema section
-    <envelope-schema>` for a description of the expected structure.
+    JSON document that contains a single page's worth of content as a rendered HTML fragment, along with any additional information necessary for the presentation of that page. See :ref:`the schema section <envelope-schema>` for a description of the expected structure.
