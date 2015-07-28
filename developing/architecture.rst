@@ -41,27 +41,9 @@ Components
     associated with a specific :term:`content ID`. Content submitted here will have its structure
     validated and indexed.
 
-  mapping service
-    Given a :term:`presented URL`, return the corresponding :term:`content ID`, or an alternate
-    destination to use as a redirect target. Uses the latest version of the :term:`control
-    repository` as a source of truth for performing the association.
-
-  layout service
-    Given a :term:`presented URL`, return the Handlebars template that should be used to render the
-    corresponding final page. Uses the latest version of the :term:`control repository` as a source
-    of truth for both associating a layout with a specific page, and for the layout templates
-    themselves.
-
-  webhook service
-    Listen for webhook notifications from the control repository. When a push has been performed, the webhook service updates a known key in etcd. Effectively, this will broadcast the change to every :term:`etcd watcher` across the entire cluster.
-
-  etcd watcher
-    When *any* :term:`webhook service` has received a push notification, perform a ``POST`` against both the :term:`mapping service` and :term:`layout service` within the same pod, to prompt each to refresh its view of the :term:`control repository`.
-
   presenter
     Accept HTTP requests from users. Map the requested :term:`presented URL` to :term:`content ID`
-    by querying the :term:`mapping service`, then access the requested :term:`metadata envelope`
-    using the :term:`content service`. Inject the envelope into an appropriate :term:`layout` and send the final HTML back in an HTTP response.
+    using the latest known version of the content mapping within the control repository, then access the requested :term:`metadata envelope` using the :term:`content service`. Inject the envelope into an appropriate :term:`layout` and send the final HTML back in an HTTP response.
 
 Lifecycle of an HTTP Request
 ----------------------------
