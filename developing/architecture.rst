@@ -62,10 +62,8 @@ Lifecycle of a Control Repository Update
 When a change is merged into the live branch of the :term:`control repository`:
 
 1. A Travis CI build executes the asset :term:`preparer` on the latest commit of the repository. Stylesheets, javascript, images, and fonts found within the ``assets`` directory are compiled, concatenated, minified, and submitted to the :term:`content service` to be fingerprinted, stored on the CDN-enabled asset container, and made available as global assets to all metadata envelopes.
-2. Meanwhile, a GitHub webhook is fired. One :term:`webhook service` within the deconst cluster receives a ``POST`` and validates its payload.
-3. The webhook service writes to an etcd key on the etcd cluster.
-4. *Every* :term:`etcd watcher` service across the cluster is notified, and sends a ``POST`` to the ``/refresh`` endpoint of the :term:`mapping service` and :term:`layout service` within the same pod.
-5. Each :term:`mapping service` and :term:`layout service` performs a shallow git clone of the control repository's new state and parses the relevant mapping information from certain files. As soon as the parsing completes successfully, the new state is live.
+2. The git clone of the :term:`control repository` on each worker host is updated by running `script/deploy --tags control`.
+3. Each :term:`presenter` is restarted to include the latest mapping changes. This can be done by running `script/ansible -m service -a 'name=deconst-presenter@1 state=restarted'`, repeating with each pod name.
 
 Lifecycle of a Content Repository Update
 ----------------------------------------
