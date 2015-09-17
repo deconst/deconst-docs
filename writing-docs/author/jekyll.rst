@@ -35,7 +35,7 @@ With Markdown:
 
 .. code-block:: text
 
-  [alt text]({% asset_path image-path.png %})
+  ![alt text]({% asset_path image-path.png %})
 
 Or with raw HTML:
 
