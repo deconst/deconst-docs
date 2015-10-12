@@ -20,6 +20,6 @@ The control repository is expected to include certain contents:
 .. toctree::
 
   mapping
-  layouts
-  layout-assets
+  templates
+  template-assets
   control-advanced
