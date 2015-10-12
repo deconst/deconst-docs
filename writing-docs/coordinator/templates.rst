@@ -87,5 +87,5 @@ Once you have :ref:`templates to render <control-template-syntax>`, you'll need 
 
 Templates are specified as paths relative to the site's subdirectory of the ``templates/`` directory, so with these mappings:
 
- 1. The page ``https://books.horse/docs/info/`` will be rendered with the template at ``templates/books.horse/default.html``.
- 2. The page ``https://books.horse/blog/hello-world/`` will be rendered with the template at ``templates/books.horse/blog-post.html``.
+#. The page ``https://books.horse/docs/info/`` will be rendered with the template at ``templates/books.horse/default.html``.
+#. The page ``https://books.horse/blog/hello-world/`` will be rendered with the template at ``templates/books.horse/blog-post.html``.
