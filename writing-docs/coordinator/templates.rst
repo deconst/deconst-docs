@@ -3,7 +3,7 @@
 Templates
 ---------
 
-The visual identity, navigation, and HTML boilerplate used for each page rendered by Deconst is provided by a set of *templates* that are managed within the control repository. Templates are written in `Handlebars <http://handlebarsjs.com/>`_ syntax and must be placed in a subdirectory of ``templates`` named after the domain in which they're used. Layout template files should usually end with an ``.html`` extension.
+The visual identity, navigation, and HTML boilerplate used for each page rendered by Deconst is provided by a set of *templates* that are managed within the control repository. Templates are written in `Nunjucks <https://mozilla.github.io/nunjucks/>`_ syntax and must be placed in a subdirectory of ``templates`` named after the domain in which they're used. Layout template files should usually end with an ``.html`` extension.
 
 .. _control-template-syntax:
 
