@@ -1,18 +1,18 @@
-.. _control-layout:
+.. _control-template:
 
-Layouts
--------
+Templates
+---------
 
-The visual identity, navigation, and HTML boilerplate used for each page rendered by Deconst is provided by a set of *layout templates* that are managed within the control repository. Layout templates are written in `Handlebars <http://handlebarsjs.com/>`_ syntax and must be placed in a directory called ``layouts`` at the root of the control repository. Layout template files should usually end with an ``.hbs`` extension.
+The visual identity, navigation, and HTML boilerplate used for each page rendered by Deconst is provided by a set of *templates* that are managed within the control repository. Templates are written in `Handlebars <http://handlebarsjs.com/>`_ syntax and must be placed in a subdirectory of ``templates`` named after the domain in which they're used. Layout template files should usually end with an ``.html`` extension.
 
-.. _control-layout-syntax:
+.. _control-template-syntax:
 
 Layout Syntax Extensions
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 There are several special helpers and variables that are made available to each layout as it's rendered. Use these to indicate where content from the :term:`metadata envelope` is to be placed.
 
- * ``{{{ envelope.body }}}``: This one is very important: it'll be replaced by the actual content of the page.
+ * ``{{ deconst.content.envelope.body }}``: This one is very important: it'll be replaced by the actual content of the page.
  * ``{{ envelope.title }}``: The name of the page, if one has been provided.
  * ``{{{ assets.js_xyz_url }}}``: The final https CDN URL of the JavaScript asset bundle from the "xyz" subdirectory. See :ref:`the assets section <control-layout-assets>` for more details.
  * ``{{{ assets.css_xyz_url }}}``: The same thing a CSS asset bundle.
