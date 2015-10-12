@@ -13,24 +13,15 @@ Layout Syntax Extensions
 There are several special helpers and variables that are made available to each layout as it's rendered. Use these to indicate where content from the :term:`metadata envelope` is to be placed.
 
  * ``{{ deconst.content.envelope.body }}``: This one is very important: it'll be replaced by the actual content of the page.
- * ``{{ envelope.title }}``: The name of the page, if one has been provided.
- * ``{{{ assets.js_xyz_url }}}``: The final https CDN URL of the JavaScript asset bundle from the "xyz" subdirectory. See :ref:`the assets section <control-layout-assets>` for more details.
- * ``{{{ assets.css_xyz_url }}}``: The same thing a CSS asset bundle.
- * ``{{{ assets.image_xyz_jpg_url }}}``: The asset URL for an image asset.
- * ``{{{ assets.font_xyz_tff_url }}}``: The asset URL for a font asset.
-
-Additionally, Deconst accepts a small number of preprocessing directives that you can use to eliminiate redundancy among your templates.
-
- * ``[@ path/to/outer.hbs @]`` will embed the current layout within another layout. This directive **must** be the first line in the template file. This layout will be placed whereever the *{{{ envelope.body }}}* directive is found within the outer layout -- this allows you to also use the outer template directly, if you so choose. If *envelope.body* is never included, a warning will be emitted.
- * ``[+ path/to/common.hbs +]`` will include the contents of another layout at this point within the current layout.
-
-.. note::
-
-  For both of these directives, the path to the other layout must be relative to the ``layouts/`` directory within the control repository.
+ * ``{{ deconst.content.envelope.title }}``: The name of the page, if one has been provided.
+ * ``{{{ deconst.assets.js_xyz_url }}}``: The final https CDN URL of the JavaScript asset bundle from the "xyz" subdirectory. See :ref:`the assets section <control-layout-assets>` for more details.
+ * ``{{{ deconst.assets.css_xyz_url }}}``: The same thing a CSS asset bundle.
+ * ``{{{ deconst.assets.image_xyz_jpg_url }}}``: The asset URL for an image asset.
+ * ``{{{ deconst.assets.font_xyz_tff_url }}}``: The asset URL for a font asset.
 
 As a complete example, this set of layouts provides basic HTML5 boilerplate, a common sidebar that may be shared among several layouts, and a specialized layout for blog posts.
 
-``layouts/books.horse/boilerplate.hbs``
+``templates/books.horse/_layouts/base.html``
 
 .. code-block:: html
 
@@ -38,17 +29,17 @@ As a complete example, this set of layouts provides basic HTML5 boilerplate, a c
   <html lang="en">
     <head>
       <meta charset="UTF-8">
-      <title>{{ envelope.title }}</title>
-      <link href="{{ assets.css_books_url }}" rel="stylesheet" type="text/css">
+      <title>{{ deconst.content.envelope.title }}</title>
+      <link href="{{ deconst.assets.css_books_url }}" rel="stylesheet" type="text/css">
     </head>
     <body>
-      {{{ envelope.body }}}
+      {% block content %}{{ deconst.content.envelope.body }}{% endblock %}
 
-      <script src="{{ assets.js_books_url }}"></script>
+      <script src="{{ deconst.assets.js_books_url }}"></script>
     </body>
   </html>
 
-``layouts/books.horse/common/sidebar.hbs``
+``templates/books.horse/_includes/sidebar.html``
 
 .. code-block:: html
 
@@ -58,23 +49,25 @@ As a complete example, this set of layouts provides basic HTML5 boilerplate, a c
     <li>Third Item</li>
   </ul>
 
-``layouts/books.horse/blog-post.hbs``
+``templates/books.horse/blog-post.html``
 
 .. code-block:: html
 
-  [@ books.horse/boilerplate.hbs @]
+  {% extends "_layouts/base.html" %}
 
-  <div class="blog">
-    <h1>This is a Blog Post</h1>
+  {% block content %}
+    <div class="blog">
+      <h1>This is a Blog Post</h1>
 
-    <div class="content">
-      {{{ envelope.body }}}
+      <div class="content">
+        {{ deconst.content.envelope.body }}
+      </div>
+
+      {% include "_includes/sidebar.html" %}
     </div>
+  {% endblock %}
 
-    [+ books.horse/common/sidebar.hbs +]
-  </div>
-
-.. _control-layout-map:
+.. _control-template-map:
 
 Mapping Layouts to Pages
 ^^^^^^^^^^^^^^^^^^^^^^^^
