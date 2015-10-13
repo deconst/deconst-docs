@@ -36,9 +36,6 @@ This is an example envelope that demonstrates the full document structure, inclu
   body
     The only required field for a valid envelope. It contains the pre-rendered HTML of the page.
 
-  layout_key
-    Associate this page with a layout in the control repository by a key. The exact layout chosen will be determined by the layout mapping service at page-rendering time. If absent or falsy, the body will be rendered as-is with no decoration.
-
   title
     The page title or blog post name used for this document.
 
