@@ -24,9 +24,6 @@ These are the integrations that need to be installed on a **control repository**
 
   .. end the code block.
 
- * A push webhook that sends a POST to the ``/refresh`` endpoint of each :term:`layout service` for each commit to master.
- * A push webhook that sends a POST to the ``/refresh`` endpoint of each :term:`mapping service` for each commit to master.
-
 These are the integrations that need to be installed on each **content repository**:
 
  * A ``.travis.yml`` file that clones and executes the appropriate :term:`preparer` for that repository type. Here's an example for a Sphinx repository:
