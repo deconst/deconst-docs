@@ -15,7 +15,7 @@ The control repository is expected to include certain contents:
  * At least one :ref:`content mapping file <control-map>` that tells Deconst which content to display where.
  * :ref:`Templates <control-template>` that give individual pages visual identity.
  * :ref:`Template mapping files <control-template-map>` that specify which template should be used to render a specific page.
- * :ref:`Global assets <control-layout-assets>` such as stylesheets, JavaScript files, or images that are referenced by the layout templates.
+ * :ref:`Global assets <control-template-assets>` such as stylesheets, JavaScript files, or images that are referenced by the layout templates.
 
 .. toctree::
 
