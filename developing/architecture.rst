@@ -7,6 +7,8 @@ Deconst is distributed as a set of Docker containers, deployed to a cluster of C
 
   The name "pod" is taken from Kubernetes, but I'm using it to mean something slightly different here. A Kubernetes pod is also a set of related containers, but they share networking and cgroup attributes, which our pods do not do. The containers within a Deconst pod are only related by regular Docker network links.
 
+  I'm not changing it now because there's a good chance we *will* be on Kubernetes at some point.
+
 This is how the world interacts with a Deconst cluster:
 
 .. image:: /_images/deconst-external.png
@@ -43,7 +45,7 @@ Components
 
   presenter
     Accept HTTP requests from users. Map the requested :term:`presented URL` to :term:`content ID`
-    using the latest known version of the content mapping within the control repository, then access the requested :term:`metadata envelope` using the :term:`content service`. Inject the envelope into an appropriate :term:`layout` and send the final HTML back in an HTTP response.
+    using the latest known version of the content mapping within the control repository, then access the requested :term:`metadata envelope` using the :term:`content service`. Inject the envelope into an appropriate :term:`template` and send the final HTML back in an HTTP response.
 
 Lifecycle of an HTTP Request
 ----------------------------
@@ -52,7 +54,7 @@ When an HTTP request hits the :term:`presenter`:
 
 1. The :term:`presenter` queries its content map with the :term:`presented URL` to discover the :term:`content ID` of the content that should be rendered at that path.
 2. Next, the presenter queries the :term:`content service` to acquire the content for that ID. The content service locates the appropriate :term:`metadata envelope`, all site-wide assets, and performs any necessary post-processing.
-3. Armed with the content ID and a layout key from the metadata envelope, the presenter locates the Nunjucks :term:`layout` that should be used to decorate the raw content. If no layout key is present, this request is skipped and a null layout (that renders the envelope's body directly) is used.
+3. Armed with the content ID and a layout key from the metadata envelope, the presenter locates the Nunjucks :term:`template` that should be used to decorate the raw content. If no template is routed, this request is skipped and a null layout (that renders the envelope's body directly) is used.
 4. Meanwhile, any "related documents" that are requested by the envelope will be queried from the :term:`content service`.
 5. The presenter renders the metadata envelope using the layout. The resulting HTML document is returned to the user.
 

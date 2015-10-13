@@ -37,8 +37,6 @@ It's important to have a shared vocabulary when talking about complicated softwa
 
     * The version of this page on the default "master" branch:
       ``https://github.com/deconst/deconst-docs/running/architecture``.
-    * The version of this page on a branch called "glossary":
-      ``https://github.com/deconst/deconst-docs/tree/glossary/running/architecture``.
     * A specific post in a Jekyll blog, generated from (theoretical) content at
       ``https://github.com/rackerlabs/developer-blog/_posts/mongodb-3.0-getting-started.md``:
       ``https://github.com/rackerlabs/developer-blog/blog/mongodb-3.0-getting-started``.
@@ -50,8 +48,8 @@ It's important to have a shared vocabulary when talking about complicated softwa
 
     Example: ``https://developer.rackspace.com/sdks/cloud-servers/getting-started/``.
 
-  layout
-    Template of common markup that surrounds each presented page with navigation, brand identity,
+  template
+    Common markup that surrounds each presented page with navigation, brand identity,
     copyright information and anything else that's shared among some subset of each site.
 
   metadata envelope
