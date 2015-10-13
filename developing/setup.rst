@@ -8,7 +8,7 @@ Prerequisities
 
 Deconst packages its services and dependencies as Docker containers. This helps to minimize the number of `yaks that you need to shave <http://en.wiktionary.org/wiki/yak_shaving>`_ to get started, but you still need to shave the yak for Docker itself.
 
- 1. Follow the `installation guide for Docker <https://docs.docker.com/installation/#installation>`_ for your platform of choice.
+#. Follow the `installation guide for Docker <https://docs.docker.com/installation/#installation>`_ for your platform of choice.
 
     You'll know you're ready to continue when you can successfully execute the following from a terminal:
 
@@ -26,9 +26,9 @@ Deconst packages its services and dependencies as Docker containers. This helps 
       Git commit (server): 7c8fca2
       OS/Arch (server): linux/amd64
 
- 2. We also use Docker Compose to orchestrate small numbers of local containers to make development more convenient. Follow the `installation guide for Docker Compose <https://docs.docker.com/compose/install/>`_.
+#. We also use Docker Compose to orchestrate small numbers of local containers to make development more convenient. Follow the `installation guide for Docker Compose <https://docs.docker.com/compose/install/>`_.
 
- 3. To contribute, you'll also need a reasonable `git <https://git-scm.com/>`_ client. It's likely that you already have one: open a terminal and type ``git version`` to check.
+#. To contribute, you'll also need a reasonable `git <https://git-scm.com/>`_ client. It's likely that you already have one: open a terminal and type ``git version`` to check.
 
 Individual Service Development
 ------------------------------
@@ -45,7 +45,7 @@ Compose will launch a container for the service you're focusing on right now, as
 
 .. note::
 
-  Unless you're developing on Linux, which can run Docker containers natively, it's likely that the Docker containers you run actually live within a virtual machine. As a consequence, you won't be able to reach your services at "localhost", but rather some other IP. The exact IP depends on the way you installed docker. For example, if you're using ``boot2docker``, running ``boot2docker ip`` will show you the IP.
+  Unless you're developing on Linux, which can run Docker containers natively, it's likely that the Docker containers you run actually live within a virtual machine. As a consequence, you won't be able to reach your services at "localhost", but rather some other IP. The exact IP depends on the way you installed docker. For example, if you're using ``docker-machine``, running ``docker-machine ip dev`` will show you the IP.
 
 Although your local source changes will take effect immediately, you may need to periodically fetch newer versions of upstream containers, as development progresses on the other parts of the system. To ensure that you have the latest builds of each container, run ``docker-compose pull``. Also, if you need to change the service's dependencies, you may need to rebuild your working container with ``docker-compose build``.
 
