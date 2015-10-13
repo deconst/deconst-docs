@@ -3,11 +3,6 @@ Markdown content in Jekyll
 
 `Jekyll <http://jekyllrb.com/>`_ is a static site engine that's specialized for blog authoring. Although Jekyll can support content in many markup formats, it's most commonly used to render `markdown <http://daringfireball.net/projects/markdown/>`_.
 
-Specifying a Layout
--------------------
-
-Deconst allows each page to be assocated with :ref:`a layout <control-layout>` from the control repository by specifying a *key*. If a page names a Jekyll layout in its frontmatter, that layout name will also be used as its layout key for deconst. If you wish to use different keys for the Jekyll build, specify a ``deconst_layout`` key instead.
-
 Frontmatter
 -----------
 
