@@ -33,6 +33,15 @@ See the `Kibana documentation <https://www.elastic.co/guide/en/kibana/current/in
 Scripts
 -------
 
+Within your ``deconst/deploy`` clone, there are a number of scripts that are useful for diagnosing and correcting problems on the cluster.
+
+ * ``script/status`` runs ``docker ps -a`` on all worker hosts. This is a good way to make sure that none of the services have unexpectedly died, or are flapping.
+ * ``script/ips`` will show you the hosts and IPs of each system in the cluster. It's occasionally useful to save a trip to the control panel.
+ * ``script/lb`` runs a diagnostic check on the load balancers' node membership, ensuring that requests are being forwarded to the correct ports on the worker hosts, based on currently living containers.
+
+    It can run in either a reporting mode (``--report``) that prints a summary of the load balancer health, or a corrective mode (``--fix``) that deletes old nodes and adds new ones.
+ * ``script/ssh <host>`` will give you a shell on a host whose name matches the pattern you provide.
+
 Systemd
 -------
 
