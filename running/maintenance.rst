@@ -11,8 +11,8 @@ Before you can effective maintain a cluster, you'll want to verify that you have
 
  * **Credentials for the cloud account** that's being used to manage the cluster's resources.
  * **SSH access to the cluster.** An administrator can arrange this by adding your GitHub username to the ``github_usernames:`` list within the cluster's ``credentials.yml`` file.
- * **A clone of the `deconst/deploy <https://github.com/deconst/deploy>`_ repository**. If you monitor more than one Deconst cluster, it's helpful to have a separate clone for each, and name the clone's directory after the cluster rather than just calling them all "deploy."
- * **A copy of the ``credentials.yml`` file** for the instance. Your ops team should arrange for an out-of-band mechanism to securely distribute this file and stay up to date. Put it in the root directory of your ``deconst/deploy`` clone.
+ * **A clone of the deconst/deploy repository** from `GitHub <https://github.com/deconst/deploy>`_. If you monitor more than one Deconst cluster, it's helpful to have a separate clone for each and name the clone's directory after the cluster rather than just calling them all "deploy."
+ * **A copy of the credentials.yml file** for the instance. Your ops team should arrange for an out-of-band mechanism to securely distribute this file and stay up to date. Put it in the root directory of your ``deconst/deploy`` clone.
 
 Logs
 ----
@@ -36,11 +36,9 @@ Scripts
 Within your ``deconst/deploy`` clone, there are a number of scripts that are useful for diagnosing and correcting problems on the cluster.
 
  * ``script/deploy`` runs the Ansible playbook again. If one or more services have died, this is a good way to restore the missing ones without interfering with anything that's already working properly. It's also the best way to propagate configuration changes through the cluster.
- * ``script/status`` runs ``docker ps -a`` on all worker hosts. This is a good way to make sure that none of the services have unexpectedly died, or are flapping.
+ * ``script/status`` runs ``docker ps -a`` on all worker hosts. This is a good way to make sure that none of the services have unexpectedly died or are flapping.
  * ``script/ips`` will show you the hosts and IPs of each system in the cluster. It's occasionally useful to save a trip to the control panel.
- * ``script/lb`` runs a diagnostic check on the load balancers' node membership, ensuring that requests are being forwarded to the correct ports on the worker hosts, based on currently living containers.
-
-    It can run in either a reporting mode (``--report``) that prints a summary of the load balancer health, or a corrective mode (``--fix``) that deletes old nodes and adds new ones.
+ * ``script/lb`` runs a diagnostic check on the load balancers' node membership, ensuring that requests are being forwarded to the correct ports on the worker hosts, based on currently living containers. It can run in either a reporting mode (``--report``) that prints a summary of the load balancer health, or a corrective mode (``--fix``) that deletes old nodes and adds new ones.
  * Finally, ``script/ssh <host>`` will give you a shell on a host whose name matches the pattern you provide. Run it with no arguments to see a list of the available hosts; provide any unique substring to identity a host from that list.
 
 Systemd
@@ -48,9 +46,9 @@ Systemd
 
 Once you have a shell on a problem system, it's useful to know a few systemd commands to investigate and manage services.
 
-If you want to really get a handle on what systemd is and how it works, I recommend taking the time to read `systemd for Administrators<http://www.freedesktop.org/wiki/Software/systemd/#thesystemdforadministratorsblogseries>`_. You'll also want to keep the `man pages <http://www.freedesktop.org/software/systemd/man/>`_ bookmarked.
+If you want to really get a handle on what systemd is and how it works, I recommend taking the time to read `systemd for Administrators <http://www.freedesktop.org/wiki/Software/systemd/#thesystemdforadministratorsblogseries>`_. You'll also want to keep the `man pages <http://www.freedesktop.org/software/systemd/man/>`_ bookmarked. In a pinch, though, these commands will do.
 
-To **list unit files** matching a pattern and report their current status:
+To **list units** matching a pattern and report their current status:
 
 .. code-block:: bash
 
@@ -62,7 +60,7 @@ To **view the current status of a unit** in more detail, including the most rece
 
   systemctl status deconst-content@2
 
-To **see the logs for a process** directly, use:
+To **see the logs for a unit** directly, use:
 
 .. code-block:: bash
 
