@@ -26,7 +26,7 @@ Application logs are consolidated and shipped to an Elasticsearch cluster extern
 
 .. image:: /_images/kibana.jpg
 
-I recommend configuration an additional DNS record of ``logs.`` to point to this host, for convenience.
+I recommend configuring an additional DNS record of ``logs.`` to point to this host, for convenience.
 
 See the `Kibana documentation <https://www.elastic.co/guide/en/kibana/current/index.html>`_ for more information about using Kibana effectively.
 
@@ -35,15 +35,52 @@ Scripts
 
 Within your ``deconst/deploy`` clone, there are a number of scripts that are useful for diagnosing and correcting problems on the cluster.
 
+ * ``script/deploy`` runs the Ansible playbook again. If one or more services have died, this is a good way to restore the missing ones without interfering with anything that's already working properly. It's also the best way to propagate configuration changes through the cluster.
  * ``script/status`` runs ``docker ps -a`` on all worker hosts. This is a good way to make sure that none of the services have unexpectedly died, or are flapping.
  * ``script/ips`` will show you the hosts and IPs of each system in the cluster. It's occasionally useful to save a trip to the control panel.
  * ``script/lb`` runs a diagnostic check on the load balancers' node membership, ensuring that requests are being forwarded to the correct ports on the worker hosts, based on currently living containers.
 
     It can run in either a reporting mode (``--report``) that prints a summary of the load balancer health, or a corrective mode (``--fix``) that deletes old nodes and adds new ones.
- * ``script/ssh <host>`` will give you a shell on a host whose name matches the pattern you provide.
+ * Finally, ``script/ssh <host>`` will give you a shell on a host whose name matches the pattern you provide. Run it with no arguments to see a list of the available hosts; provide any unique substring to identity a host from that list.
 
 Systemd
 -------
+
+Once you have a shell on a problem system, it's useful to know a few systemd commands to investigate and manage services.
+
+If you want to really get a handle on what systemd is and how it works, I recommend taking the time to read `systemd for Administrators<http://www.freedesktop.org/wiki/Software/systemd/#thesystemdforadministratorsblogseries>`_. You'll also want to keep the `man pages <http://www.freedesktop.org/software/systemd/man/>`_ bookmarked.
+
+To **list unit files** matching a pattern and report their current status:
+
+.. code-block:: bash
+
+  systemctl list-units deconst-*
+
+To **view the current status of a unit** in more detail, including the most recent bit of its logs:
+
+.. code-block:: bash
+
+  systemctl status deconst-content@2
+
+To **see the logs for a process** directly, use:
+
+.. code-block:: bash
+
+  journalctl -b -u deconst-presenter@1
+
+To **follow the logs in real time**:
+
+.. code-block:: bash
+
+  journalctl -f -u deconst-presenter@1
+
+To **stop, start, or restart** one or more units:
+
+.. code-block:: bash
+
+  sudo systemctl stop deconst-presenter@1
+  sudo systemctl start deconst-content@2
+  sudo systemctl restart deconst-logstash
 
 If you have to nuke it from orbit
 ---------------------------------
