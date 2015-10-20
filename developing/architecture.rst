@@ -77,6 +77,6 @@ Lifecycle of a Content Repository Update
 
 When a change is merged into the live branch of a :term:`content repository`:
 
-1. A Travis CI build executes the appropriate :term:`preparer` on the latest commit of the repository.
-2. The preparer generates a :term:`metadata envelope` for each page that would be rendered, assigns it a :term:`content ID` using a configured base ID, and submits it to the :term:`content service`.
-3. Each static resource (images, mostly) are submitted to the :term:`content service` and published to the CDN as non-global assets. The response includes the CDN URL, which is then used within the generated envelopes.
+#. A Travis CI build executes the appropriate :term:`preparer` on the latest commit of the repository.
+#. The preparer generates a :term:`metadata envelope` for each page that would be rendered, assigns it a :term:`content ID` using a configured base ID, and submits it to the :term:`content service`.
+#. Each static resource (images, mostly) are submitted to the :term:`content service` and published to the CDN as non-global assets. The response includes the CDN URL, which is then used within the generated envelopes.
