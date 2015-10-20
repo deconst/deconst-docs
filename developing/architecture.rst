@@ -53,13 +53,15 @@ Components
 Lifecycle of an HTTP Request
 ----------------------------
 
-When an HTTP request hits the :term:`presenter`:
+When a content consumer initiates an HTTPS request:
 
-1. The :term:`presenter` queries its content map with the :term:`presented URL` to discover the :term:`content ID` of the content that should be rendered at that path.
-2. Next, the presenter queries the :term:`content service` to acquire the content for that ID. The content service locates the appropriate :term:`metadata envelope`, all site-wide assets, and performs any necessary post-processing.
-3. Armed with the content ID and a layout key from the metadata envelope, the presenter locates the Nunjucks :term:`template` that should be used to decorate the raw content. If no template is routed, this request is skipped and a null layout (that renders the envelope's body directly) is used.
-4. Meanwhile, any "related documents" that are requested by the envelope will be queried from the :term:`content service`.
-5. The presenter renders the metadata envelope using the layout. The resulting HTML document is returned to the user.
+#. The Cloud Load Balancer proxies the request to one of the registered :term:`nginx` containers.
+#. :term:`nginx` terminates TLS and, in turn, proxies the request to its linked :term:`presenter`.
+#. The :term:`presenter` queries its content map with the :term:`presented URL` to discover the :term:`content ID` of the content that should be rendered at that path.
+#. Next, the presenter queries the :term:`content service` to acquire the content for that ID. The content service locates the appropriate :term:`metadata envelope`, all site-wide assets, and performs any necessary post-processing.
+#. Armed with the content ID and a layout key from the metadata envelope, the presenter locates the Nunjucks :term:`template` that should be used to decorate the raw content. If no template is routed, this request is skipped and a null layout (that renders the envelope's body directly) is used.
+#. Meanwhile, any "related documents" that are requested by the envelope will be queried from the :term:`content service`.
+#. The presenter renders the metadata envelope using the layout. The resulting HTML document is returned to the user.
 
 Lifecycle of a Control Repository Update
 ----------------------------------------
