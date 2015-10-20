@@ -47,6 +47,9 @@ Components
     Accept HTTP requests from users. Map the requested :term:`presented URL` to :term:`content ID`
     using the latest known version of the content mapping within the control repository, then access the requested :term:`metadata envelope` using the :term:`content service`. Inject the envelope into an appropriate :term:`template` and send the final HTML back in an HTTP response.
 
+  nginx
+    Reverse proxy that accepts requests from off of the host, terminates TLS, and delegates to the local :term:`presenter` and :term:`content service`.
+
 Lifecycle of an HTTP Request
 ----------------------------
 
