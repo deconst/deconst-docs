@@ -47,31 +47,36 @@ Components
     Accept HTTP requests from users. Map the requested :term:`presented URL` to :term:`content ID`
     using the latest known version of the content mapping within the control repository, then access the requested :term:`metadata envelope` using the :term:`content service`. Inject the envelope into an appropriate :term:`template` and send the final HTML back in an HTTP response.
 
+  nginx
+    Reverse proxy that accepts requests from off of the host, terminates TLS, and delegates to the local :term:`presenter` and :term:`content service`.
+
 Lifecycle of an HTTP Request
 ----------------------------
 
-When an HTTP request hits the :term:`presenter`:
+When a content consumer initiates an HTTPS request:
 
-1. The :term:`presenter` queries its content map with the :term:`presented URL` to discover the :term:`content ID` of the content that should be rendered at that path.
-2. Next, the presenter queries the :term:`content service` to acquire the content for that ID. The content service locates the appropriate :term:`metadata envelope`, all site-wide assets, and performs any necessary post-processing.
-3. Armed with the content ID and a layout key from the metadata envelope, the presenter locates the Nunjucks :term:`template` that should be used to decorate the raw content. If no template is routed, this request is skipped and a null layout (that renders the envelope's body directly) is used.
-4. Meanwhile, any "related documents" that are requested by the envelope will be queried from the :term:`content service`.
-5. The presenter renders the metadata envelope using the layout. The resulting HTML document is returned to the user.
+#. The Cloud Load Balancer proxies the request to one of the registered :term:`nginx` containers.
+#. :term:`nginx` terminates TLS and, in turn, proxies the request to its linked :term:`presenter`.
+#. The :term:`presenter` queries its content map with the :term:`presented URL` to discover the :term:`content ID` of the content that should be rendered at that path.
+#. Next, the presenter queries the :term:`content service` to acquire the content for that ID. The content service locates the appropriate :term:`metadata envelope`, all site-wide assets, and performs any necessary post-processing.
+#. Armed with the content ID and a layout key from the metadata envelope, the presenter locates the Nunjucks :term:`template` that should be used to decorate the raw content. If no template is routed, this request is skipped and a null layout (that renders the envelope's body directly) is used.
+#. Meanwhile, any "related documents" that are requested by the envelope will be queried from the :term:`content service`.
+#. The presenter renders the metadata envelope using the layout. The resulting HTML document is returned to the user.
 
 Lifecycle of a Control Repository Update
 ----------------------------------------
 
 When a change is merged into the live branch of the :term:`control repository`:
 
-1. A Travis CI build executes the asset :term:`preparer` on the latest commit of the repository. Stylesheets, javascript, images, and fonts found within the ``assets`` directory are compiled, concatenated, minified, and submitted to the :term:`content service` to be fingerprinted, stored on the CDN-enabled asset container, and made available as global assets to all metadata envelopes.
-2. The git clone of the :term:`control repository` on each worker host is updated by running `script/deploy --tags control`.
-3. Each :term:`presenter` is restarted to include the latest mapping changes. This can be done by running `script/ansible -m service -a 'name=deconst-presenter@1 state=restarted'`, repeating with each pod name.
+#. A Travis CI build executes the asset :term:`preparer` on the latest commit of the repository. Stylesheets, javascript, images, and fonts found within the ``assets`` directory are compiled, concatenated, minified, and submitted to the :term:`content service` to be fingerprinted, stored on the CDN-enabled asset container, and made available as global assets to all metadata envelopes.
+#. The git clone of the :term:`control repository` on each worker host is updated by running ``script/deploy --tags control``.
+#. Each :term:`presenter` is restarted to include the latest mapping changes. This can be done by running ``script/deploy --tags restart -e 'presenter_restart=true'``.
 
 Lifecycle of a Content Repository Update
 ----------------------------------------
 
 When a change is merged into the live branch of a :term:`content repository`:
 
-1. A Travis CI build executes the appropriate :term:`preparer` on the latest commit of the repository.
-2. The preparer generates a :term:`metadata envelope` for each page that would be rendered, assigns it a :term:`content ID` using a configured base ID, and submits it to the :term:`content service`.
-3. Each static resource (images, mostly) are submitted to the :term:`content service` and published to the CDN as non-global assets. The response includes the CDN URL, which is then used within the generated envelopes.
+#. A Travis CI build executes the appropriate :term:`preparer` on the latest commit of the repository.
+#. The preparer generates a :term:`metadata envelope` for each page that would be rendered, assigns it a :term:`content ID` using a configured base ID, and submits it to the :term:`content service`.
+#. Each static resource (images, mostly) are submitted to the :term:`content service` and published to the CDN as non-global assets. The response includes the CDN URL, which is then used within the generated envelopes.
