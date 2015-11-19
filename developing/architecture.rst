@@ -69,8 +69,9 @@ Lifecycle of a Control Repository Update
 When a change is merged into the live branch of the :term:`control repository`:
 
 #. A Travis CI build executes the asset :term:`preparer` on the latest commit of the repository. Stylesheets, javascript, images, and fonts found within the ``assets`` directory are compiled, concatenated, minified, and submitted to the :term:`content service` to be fingerprinted, stored on the CDN-enabled asset container, and made available as global assets to all metadata envelopes.
-#. The git clone of the :term:`control repository` on each worker host is updated by running ``script/deploy --tags control``.
-#. Each :term:`presenter` is restarted to include the latest mapping changes. This can be done by running ``script/deploy --tags restart -e 'presenter_restart=true'``.
+#. Once all assets have been published, the preparer sends the latest git commit SHA of the control repository to the :term:`content service`, where it's stored in MongoDB.
+#. During each request, each :term:`presenter` queries its linked :term:`content service` for the active control repository SHA. If it doesn't match last-loaded control repository SHA, the presenter triggers an asynchronous update.
+#. If successful, the new content and template mappings, redirects, and templates will be atomically installed. Otherwise, the presenter will log an error with the details and wait for further changes before attempting to reload.
 
 Lifecycle of a Content Repository Update
 ----------------------------------------
