@@ -16,6 +16,9 @@ This is an example envelope that demonstrates the full document structure, inclu
     "bio": "He's just this guy, you know?",
     "toc": "<ul>\n<li><a href=\"#\">Top</a></li><li><a href=\"#section\">Section</a></li></ul>",
     "publish_date": "Fri, 15 May 2015 18:32:45 GMT",
+    "tags": ["tag one", "tag two"],
+    "categories": ["category one", "category two"],
+    "keywords": ["keyword one", "keyword two"],
     "disqus": {
       "include": true,
       "short_name": "devblog",
@@ -59,6 +62,9 @@ This is an example envelope that demonstrates the full document structure, inclu
 
   categories
     An array of content classification strings that are explicitly user-provided and chosen from a list fixed in the control repository.
+
+  keywords
+    An array of terms to supplement full-text search indexing.
 
   disqus
     An object that controls the inclusion of Disqus comments on the current page. If present, must be an object with the following structure:
