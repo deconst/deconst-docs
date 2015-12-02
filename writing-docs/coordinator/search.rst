@@ -60,3 +60,12 @@ The search filter accepts two optional parameters: the current page number and t
 
   {% set query = deconst.request.query %}
   {% set r = query.q|search(query.page, query.pageSize) %}
+
+To submit searches from any page, create a form that populates the corresponding query parameters:
+
+.. code-block:: html
+
+  <form method="get" action="/search">
+    <label for="q">Search: </label>
+    <input id="q" name="q" type="text" value="{{ deconst.request.query.q }}">
+  </form>
