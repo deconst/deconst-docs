@@ -41,7 +41,7 @@ Finally, you'll need to :ref:`create the template <control-template>` that displ
 
   {% set r = deconst.request.query.q|search %}
 
-  <h2>Your search had {{ r.total }} results.</h2>
+  <h2>Your search had {{ r.total }} results in {{ r.pages }} pages.</h2>
 
   {% for result in r.results %}
     <!-- Use attributes on the result object to generate a search result. -->
