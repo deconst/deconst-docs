@@ -22,4 +22,5 @@ The control repository is expected to include certain contents:
   mapping
   templates
   template-assets
+  search
   control-advanced
