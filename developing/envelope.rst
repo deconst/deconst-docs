@@ -19,6 +19,7 @@ This is an example envelope that demonstrates the full document structure, inclu
     "tags": ["tag one", "tag two"],
     "categories": ["category one", "category two"],
     "keywords": ["keyword one", "keyword two"],
+    "unsearchable": true,
     "disqus": {
       "include": true,
       "short_name": "devblog",
@@ -65,6 +66,9 @@ This is an example envelope that demonstrates the full document structure, inclu
 
   keywords
     An array of terms to supplement full-text search indexing.
+
+  unsearchable
+    If present and set to ``true``, this envelope will be excluded from the full-text search index. Use this for content that hasn't been :ref:`mapped <control-map>` yet or documents like RSS feeds, ``robots.txt`` files, and other site metadata.
 
   disqus
     An object that controls the inclusion of Disqus comments on the current page. If present, must be an object with the following structure:
