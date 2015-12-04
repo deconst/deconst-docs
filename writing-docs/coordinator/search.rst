@@ -54,12 +54,16 @@ Finally, you'll need to :ref:`create the template <control-template>` that displ
     <p>No results found.</p>
   {% endfor %}
 
-The search filter accepts two optional parameters: the current page number and the count of entries per page. The page number defaults to 1 and the page count defaults to 10.
+The search filter accepts optional keyword parameters:
+
+* ``pageNumber`` is the current page number, which defaults to 1.
+* ``perPage`` is the number of results to include in a single page, which defaults to 10.
+* ``categories`` is an array of strings that, if specified, constrain search results to envelopes with at least one matching category.
 
 .. code-block:: html
 
   {% set query = deconst.request.query %}
-  {% set r = query.q|search(query.page, query.pageSize) %}
+  {% set r = query.q|search(pageNumber=query.page, perPage=query.pageSize) %}
 
 To submit searches from any page, create a form that populates the corresponding query parameters:
 

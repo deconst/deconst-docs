@@ -268,3 +268,6 @@ texinfo_documents = [
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {'http://docs.python.org/': None}
+
+# Submit all pages into the "deconst.horse" category.
+deconst_categories = ['deconst.horse']
