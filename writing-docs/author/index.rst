@@ -34,6 +34,15 @@ As you work, you can freely create new pages and directories and they will autom
 
   Currently, *deleting* pages doesn't actually remove the content from deconst. An administrator needs to remove documents from Cloud Files manually to delete content.
 
+Content Repository Metadata
+------------------------------------
+
+Deconst preparers will look for a file named ``_deconst.json`` at the root of each content repository. This file allows content authors to provide metadata that may influence the way the deconst instance handles content from the repository.
+
+- ``contentIDBase``: A string that is prepended to the local path of every submitted file in order to create a unique **content ID**. This is often the content repository's Github URL.
+- ``githubUrl``: The content repository's Github URL. If present, will be used to add ``github_issues_url`` and ``github_edit_url`` to each submitted content envelope.
+- ``meta``: An object with arbitrary content. This object will be merged with document-specific metadata and set as the  ``meta`` property of each submitted content envelope.
+
 Supported Content Repository Formats
 ------------------------------------
 
