@@ -82,6 +82,7 @@ Alternative: Manual Setup of Development Environment
 ----------------------------------------------------
 
 .. code-block:: bash
+
   # generate an API key for the content service
   APIKEY=$(hexdump -v -e '1/1 "%.2x"' -n 128 /dev/random)
   echo "Content Service Admin API Key:" $APIKEY
