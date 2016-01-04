@@ -17,7 +17,7 @@ Before you can effective maintain a cluster, you'll want to verify that you have
 Logs
 ----
 
-Application logs are consolidated and shipped to an Elasticsearch cluster external to the Deconst cluster, so that you can quickly see what's happening across the entire system. The Deconst ELK node hosts Logstash (to manipulate the logs right before they're persisted) and Kibana for visualization. Point your browser to port 80 of the ELK node to access Kibana. You can find credentials in your ``credentials.yml`` file:
+Application logs are consolidated and shipped to an Elasticsearch and Kibana cluster external to the Deconst cluster, so that you can quickly see what's happening across the entire system. The Deconst ELK node hosts Logstash (to manipulate the logs right before they're persisted). Point your browser to the public HTTPS Kibana URL of the external cluster to access Kibana. You can find credentials in your ``credentials.yml`` file:
 
 .. code-block:: bash
 
