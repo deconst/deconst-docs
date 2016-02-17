@@ -19,6 +19,16 @@ Each pod includes the following arrangement of interlinked service containers:
 
 .. image:: /_images/deconst-internal.png
 
+On the build host, a dedicated `Strider CD <https://github.com/Strider-CD/strider>`_ continuous integration server manages cluster-internal and automatically created builds.
+
+.. image:: /_images/deconst-build.png
+
+Access to Strider is managed by membership in a GitHub organization or in teams within an organization, as configured in the instance's credentials file.
+
+Strider is prepopulated with a build for the instance's control repository that preprocesses and submits site-wide assets to the content service, and automatically creates new content builds based on a list in a configuration file.
+
+The asset preparer process and any content build preparer processes are run in isolated Docker containers, sharing a workspace with Strider by a data volume container.
+
 Components
 ----------
 
