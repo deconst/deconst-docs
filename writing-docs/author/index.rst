@@ -7,6 +7,71 @@ The domain and subpath that host the content from a specific content repository 
 
 Once the content repository is fully configured, any changes merged into the "master" branch will automatically be live.
 
+Adding a New Content Repository
+-------------------------------
+
+The easiest content repositories to add to a Deconst instance are:
+
+- Written in one of the :ref:`already-supported formats <supported-formats>`.
+- Hosted in a git repository on `github.com <https://github.com/>`_, public or private.
+
+If your content repository meets those critera, add a new content repository to Deconst by:
+
+#. **Ensure that the Deconst instance's GitHub account can access your repository.** If your repository is public, you don't have to do anything. If your repository is private, you'll need to grant the Deconst instance's GitHub account access before your build can be configured. Ask a Deconst administrator for the name of the bot account.
+
+#. **Create a "_deconst.json" file within each content root directory.** This file tells Deconst important details about the content within this directory. Place it in the same directory as your ``conf.py`` or ``_config.yml`` files.
+
+   The most important setting within this file is the *content ID base*. The content ID base will be used to uniquely identify the content produced from this directory within the system, so it must be unique across *all* content repositories that are published to a Deconst cluster. The easiest way to accomplish this is to set the content ID base to the content repository's GitHub URL (including the trailing slash to be consistent).
+
+   You can specify other settings within this file as well, but they're all optional.
+
+   * ``githubUrl``: Set this to the content repository's GitHub URL. If you do, it may be used to generate "submit an issue" or "edit on GitHub" links for your content.
+   * ``githubBranch``: Target "edit on GitHub" links to modify content on a branch other than "master".
+   * ``preparer``: Set this to the name of a Docker container image that contains the preparer for this content. Generally, Deconst will automatically infer the preparer to use from the contents of the directory, but you can override it explicitly here if needed. The container name must be on a whitelist that's controlled by the cluster administrators.
+   * ``meta``: An object with arbitrary content that will be merged with document-specific metadata. This data will be available to :ref:`templates in the control repository <control-template>` beneath the ``meta`` key for extra customization. Check the README for the instance's control repository to see what keys have meaning for your templates.
+
+   Here's an example of the minimum possible ``_deconst.json`` file:
+
+   .. code-block:: json
+
+     {
+       "contentIDBase": "https://github.com/deconst/deconst-docs/"
+     }
+
+   Here's another ``_deconst.json`` example, fully populated:
+
+   .. code-block:: json
+
+     {
+       "contentIDBase": "https://github.com/deconst/deconst-docs/",
+       "githubUrl": "https://github.com/deconst/deconst-docs/",
+       "preparer": "quay.io/deconst/preparer-sphinx",
+       "meta": {
+         "someKey": "someValue"
+       }
+     }
+
+   One content repository can include many content root directories. Place a ``_deconst.json`` file within each one and Deconst will automatically prepare the content within each. Make sure that you give each directory a distinct content ID base! The easiest way to do this is to append a meaningful suffix to the GitHub repository URL for each one, like a version number:
+
+   .. code-block:: json
+
+     {
+       "contentIDBase": "https://github.com/deconst/deconst-docs/v1/"
+     }
+
+#. **Send a pull request to the control repository to add your content repository's name to the automatic build list.** This is a file called ``content-repositories.json`` in the root directory of the control repository that looks like this:
+
+   .. code-block:: json
+
+     [
+       { "kind": "github", "project": "deconst/deconst-docs" },
+       { "kind": "github", "project": "myorg/my-content" }
+     ]
+
+   Add a new entry to the array with your project's name. Once your pull request is merged, a :term:`Strider` build will be created for your content repository, and any changes that you make to your repository from this point forward will automatically be submitted to Deconst.
+
+At this point, your content is being sent to Deconst, but nobody can see it yet. The next step is to work with a :ref:`coordinator <site-coordinator>` to decide on a place your content should live in the context of the larger site.
+
 Where Will Your Content Live
 ----------------------------
 
@@ -34,14 +99,9 @@ As you work, you can freely create new pages and directories and they will autom
 
   Currently, *deleting* pages doesn't actually remove the content from deconst. An administrator needs to remove documents from Cloud Files manually to delete content.
 
-Content Repository Metadata
-------------------------------------
+Content mapping is determined by :ref:`content mapping configuration files <control-map>` within the control repository. Open an issue on the control repository to discuss the addition of new content, or modify the content mapping files yourself in a pull request if you're also a site coordinator.
 
-Deconst preparers will look for a file named ``_deconst.json`` at the root of each content repository. This file allows content authors to provide metadata that may influence the way the deconst instance handles content from the repository.
-
-- ``contentIDBase``: A string that is prepended to the local path of every submitted file in order to create a unique **content ID**. This is often the content repository's Github URL.
-- ``githubUrl``: The content repository's Github URL. If present, will be used to add ``github_issues_url`` and ``github_edit_url`` to each submitted content envelope.
-- ``meta``: An object with arbitrary content. This object will be merged with document-specific metadata and set as the  ``meta`` property of each submitted content envelope.
+.. _supported-formats:
 
 Supported Content Repository Formats
 ------------------------------------

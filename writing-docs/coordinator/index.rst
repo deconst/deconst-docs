@@ -1,3 +1,5 @@
+.. _site-coordinator:
+
 Coordinating a Deconst Site
 ===========================
 
