@@ -15,7 +15,7 @@ The easiest content repositories to add to a Deconst instance are:
 - Written in one of the :ref:`already-supported formats <supported-formats>`.
 - Hosted in a git repository on `github.com <https://github.com/>`_, public or private.
 
-If your content repository meets those critera, add a new content repository to Deconst by:
+If your content repository does not meet those criteria, :ref:`integrating your content is still possible, but will likely take more work <custom-content-integration>`. If you do qualify for the easy route, add a new content repository to Deconst by:
 
 #. **Ensure that the Deconst instance's GitHub account can access your repository.** If your repository is public, you don't have to do anything. If your repository is private, you'll need to grant the Deconst instance's GitHub account access before your build can be configured. Ask a Deconst administrator for the name of the bot account.
 
@@ -100,6 +100,8 @@ As you work, you can freely create new pages and directories and they will autom
   Currently, *deleting* pages doesn't actually remove the content from deconst. An administrator needs to remove documents from Cloud Files manually to delete content.
 
 Content mapping is determined by :ref:`content mapping configuration files <control-map>` within the control repository. Open an issue on the control repository to discuss the addition of new content, or modify the content mapping files yourself in a pull request if you're also a site coordinator.
+
+.. _custom-content-integration:
 
 Custom Content Repository Integrations
 --------------------------------------
