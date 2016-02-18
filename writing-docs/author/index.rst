@@ -101,6 +101,24 @@ As you work, you can freely create new pages and directories and they will autom
 
 Content mapping is determined by :ref:`content mapping configuration files <control-map>` within the control repository. Open an issue on the control repository to discuss the addition of new content, or modify the content mapping files yourself in a pull request if you're also a site coordinator.
 
+Custom Content Repository Integrations
+--------------------------------------
+
+While Deconst provides automation to support content repositories that satisfy the constraints listed above, it's flexible enough to accept content from virtually anywhere. You can even submit content entirely by manually using nothing but ``curl`` if you really want to. If your content repository is different, you'll need to do more work up front.
+
+Whatever is different about your content repository, you'll need two pieces of information to begin:
+
+* The **content service URL** for the Deconst instance. Generally, this will be port 9000 on a domain served by the instance, like ``https://deconst.horse:9000``.
+* An **API key** issued for you by an administrator. While you can technically use a single key for all of your content, I recommend using a distinct key for each content repository, because it diminishes the impact of a key being revoked and makes it easier to track activity in the logs.
+
+**If your repository is not hosted on github.com,** but is reachable from the network that the Deconst instance is running on, you'll need to create a custom Strider build. You can do this for any git-based provider by choosing the "Manual Add" option under the "Projects" tab:
+
+.. image:: /_images/strider-manual-add.jpg
+
+**If your repository is not reachable from the network** because it's hosted behind a firewall or **if your repository is not version controlled with git**, you'll need to configure your own continuous integration solution, like `Jenkins <https://jenkins-ci.org/>`_. You should set it up to run the appropriate :term:`preparer` on your content repository each time new work is accepted.
+
+**If your repository is not written in a supported content format,** you'll need to write a custom :term:`preparer`. Depending on the flexibility and architecture of the tooling, the difficulty of doing this can vary from "a few days' work by a developer" to "a lot of time".
+
 .. _supported-formats:
 
 Supported Content Repository Formats
