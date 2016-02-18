@@ -19,6 +19,16 @@ Each pod includes the following arrangement of interlinked service containers:
 
 .. image:: /_images/deconst-internal.png
 
+On the build host, a dedicated `Strider CD <https://github.com/Strider-CD/strider>`_ continuous integration server manages cluster-internal and automatically created builds.
+
+.. image:: /_images/deconst-build.png
+
+Access to Strider is managed by membership in a GitHub organization or in teams within an organization, as configured in the instance's credentials file.
+
+Strider is prepopulated with a build for the instance's control repository that preprocesses and submits site-wide assets to the content service, and automatically creates new content builds based on a list in a configuration file.
+
+The asset preparer process and any content build preparer processes are run in isolated Docker containers, sharing a workspace with Strider by a data volume container.
+
 Components
 ----------
 
@@ -50,6 +60,9 @@ Components
   nginx
     Reverse proxy that accepts requests from off of the host, terminates TLS, and delegates to the local :term:`presenter` and :term:`content service`.
 
+  strider
+    A continuous integration server integrated with Deconst to provide on-cluster preparer runs.
+
 Lifecycle of an HTTP Request
 ----------------------------
 
@@ -68,8 +81,9 @@ Lifecycle of a Control Repository Update
 
 When a change is merged into the live branch of the :term:`control repository`:
 
-#. A Travis CI build executes the asset :term:`preparer` on the latest commit of the repository. Stylesheets, javascript, images, and fonts found within the ``assets`` directory are compiled, concatenated, minified, and submitted to the :term:`content service` to be fingerprinted, stored on the CDN-enabled asset container, and made available as global assets to all metadata envelopes.
+#. A Strider build executes the asset :term:`preparer` on the latest commit of the repository. Stylesheets, javascript, images, and fonts found within the ``assets`` directory are compiled, concatenated, minified, and submitted to the :term:`content service` to be fingerprinted, stored on the CDN-enabled asset container, and made available as global assets to all metadata envelopes.
 #. Once all assets have been published, the preparer sends the latest git commit SHA of the control repository to the :term:`content service`, where it's stored in MongoDB.
+#. Each entry within the ``content-repositories.json`` file is checked against the list of :term:`strider` builds. If any new entries have been added, a content build is created and configured with a newly issued API key.
 #. During each request, each :term:`presenter` queries its linked :term:`content service` for the active control repository SHA. If it doesn't match last-loaded control repository SHA, the presenter triggers an asynchronous update.
 #. If successful, the new content and template mappings, redirects, and templates will be atomically installed. Otherwise, the presenter will log an error with the details and wait for further changes before attempting to reload.
 
@@ -78,6 +92,6 @@ Lifecycle of a Content Repository Update
 
 When a change is merged into the live branch of a :term:`content repository`:
 
-#. A Travis CI build executes the appropriate :term:`preparer` on the latest commit of the repository.
+#. A Strider build scans the latest commit of the repository for directories containing ``_deconst.json`` files and executes the appropriate :term:`preparer` within a new Docker container that's given the context of each one.
 #. The preparer generates a :term:`metadata envelope` for each page that would be rendered, assigns it a :term:`content ID` using a configured base ID, and submits it to the :term:`content service`.
 #. Each static resource (images, mostly) are submitted to the :term:`content service` and published to the CDN as non-global assets. The response includes the CDN URL, which is then used within the generated envelopes.

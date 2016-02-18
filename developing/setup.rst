@@ -95,27 +95,27 @@ Alternative: Manual Setup of Development Environment
   cd {wherever you have the deconst/content-service}
   docker build --tag content-service:1.0.0 .
   docker run -d -p 9000:8080 \
-                -e NODE_ENV=development \
-                -e STORAGE=memory \
-                -e MONGODB_URL=mongodb://mongo:27017/content \
-                -e ELASTICSEARCH_HOST=http://elasticsearch:9200/ \
-                -e ADMIN_APIKEY=$APIKEY \
-                --link mongo:mongo \
-                --link elasticsearch:elasticsearch \
-                --name content \
-                content-service:1.0.0 script/inside/dev
+    -e NODE_ENV=development \
+    -e STORAGE=memory \
+    -e MONGODB_URL=mongodb://mongo:27017/content \
+    -e ELASTICSEARCH_HOST=http://elasticsearch:9200/ \
+    -e ADMIN_APIKEY=$APIKEY \
+    --link mongo:mongo \
+    --link elasticsearch:elasticsearch \
+    --name content \
+    content-service:1.0.0 script/inside/dev
 
   # build and deploy the presenter service
   cd {wherever you have the deconst/presenter}
   docker build --tag presenter-service:1.0.0 .
   docker run -d -p 80:8080 \
-                -e NODE_ENV=development \
-                -e CONTROL_REPO_PATH=/var/control-repo \
-                -e CONTROL_REPO_URL=https://github.com/j12y/nexus-control.git \
-                -e CONTROL_REPO_BRANCH=setup_howtos \
-                -e CONTENT_SERVICE_URL=http://content:8080 \
-                -e PRESENTED_URL_PROTO=http \
-                -e PRESENTED_URL_DOMAIN=support.rackspace.com \
-                --link content \
-                --name presenter \
-                presenter-service:1.0.0 script/dev
+    -e NODE_ENV=development \
+    -e CONTROL_REPO_PATH=/var/control-repo \
+    -e CONTROL_REPO_URL=https://github.com/j12y/nexus-control.git \
+    -e CONTROL_REPO_BRANCH=setup_howtos \
+    -e CONTENT_SERVICE_URL=http://content:8080 \
+    -e PRESENTED_URL_PROTO=http \
+    -e PRESENTED_URL_DOMAIN=support.rackspace.com \
+    --link content \
+    --name presenter \
+    presenter-service:1.0.0 script/dev
