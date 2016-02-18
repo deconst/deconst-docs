@@ -7,6 +7,8 @@ The domain and subpath that host the content from a specific content repository 
 
 Once the content repository is fully configured, any changes merged into the "master" branch will automatically be live.
 
+.. _adding-new-content-repository:
+
 Adding a New Content Repository
 -------------------------------
 

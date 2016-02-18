@@ -8,4 +8,5 @@ If you'd like to start contributing to Deconst, welcome! The resources found her
   setup
   terminology
   architecture
+  preparer
   envelope
