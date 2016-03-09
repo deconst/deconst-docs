@@ -32,10 +32,9 @@ It's important to have a shared vocabulary when talking about complicated softwa
 
     By convention, these are URLs that join the base URL of the :term:`content repository` with the
     relative path of the rendered output page.
-    
+
     When making calls to the content API, the content ID must be URL encoded. For example,
-    https%3A%2F%2Fgithub.com%2Frackerlabs%2Fdocs-container-service is the content ID for
-    the GitHub repository on github.com/rackerlabs/docs-container-service.
+    ``https%3A%2F%2Fgithub.com%2Frackerlabs%2Fdocs-container-service`` is the encoded form of the content ID ``github.com/rackerlabs/docs-container-service``.
 
     Examples:
 
@@ -44,6 +43,10 @@ It's important to have a shared vocabulary when talking about complicated softwa
     * A specific post in a Jekyll blog, generated from (theoretical) content at
       ``https://github.com/rackerlabs/developer-blog/_posts/mongodb-3.0-getting-started.md``:
       ``https://github.com/rackerlabs/developer-blog/blog/mongodb-3.0-getting-started``.
+
+  revision ID
+  revision IDs
+    Identifier used to isolate different staging environments from one another.
 
   presented URL
   presented URLs
