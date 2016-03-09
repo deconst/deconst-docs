@@ -32,10 +32,9 @@ It's important to have a shared vocabulary when talking about complicated softwa
 
     By convention, these are URLs that join the base URL of the :term:`content repository` with the
     relative path of the rendered output page.
-    
+
     When making calls to the content API, the content ID must be URL encoded. For example,
-    https%3A%2F%2Fgithub.com%2Frackerlabs%2Fdocs-container-service is the content ID for
-    the GitHub repository on github.com/rackerlabs/docs-container-service.
+    ``https%3A%2F%2Fgithub.com%2Frackerlabs%2Fdocs-container-service`` is the encoded form of the content ID ``github.com/rackerlabs/docs-container-service``.
 
     Examples:
 
