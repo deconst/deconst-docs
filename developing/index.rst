@@ -9,4 +9,5 @@ If you'd like to start contributing to Deconst, welcome! The resources found her
   terminology
   architecture
   preparer
+  staging
   envelope
