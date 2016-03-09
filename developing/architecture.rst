@@ -19,7 +19,7 @@ Each pod includes the following arrangement of interlinked service containers:
 
 .. image:: /_images/deconst-internal.png
 
-On the build host, a dedicated `Strider CD <https://github.com/Strider-CD/strider>`_ continuous integration server manages cluster-internal and automatically created builds.
+On the build host, a dedicated `Strider CD <https://github.com/Strider-CD/strider>`_ continuous integration server manages cluster-internal and automatically created builds. It also includes a set of service containers that act as a staging environment that can be used to preview content in context before it's merged and shipped.
 
 .. image:: /_images/deconst-build.png
 
