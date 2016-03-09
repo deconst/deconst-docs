@@ -44,6 +44,10 @@ It's important to have a shared vocabulary when talking about complicated softwa
       ``https://github.com/rackerlabs/developer-blog/_posts/mongodb-3.0-getting-started.md``:
       ``https://github.com/rackerlabs/developer-blog/blog/mongodb-3.0-getting-started``.
 
+  revision ID
+  revision IDs
+    Identifier used to isolate different staging environments from one another.
+
   presented URL
   presented URLs
     URL of a page within the final presented content of a deconst site. This should be the full URL,
