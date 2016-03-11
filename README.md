@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/deconst/deconst-docs.svg?branch=master)](https://travis-ci.org/deconst/deconst-docs)
+[![Build Status](https://build.deconst.horse/deconst/deconst-docs/badge?branch=master)
 
 # Deconst documentation
 

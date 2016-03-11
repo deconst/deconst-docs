@@ -1,8 +1,0 @@
----
-language: python
-python:
-- "3.4"
-install:
-- "pip install -e git+https://github.com/deconst/preparer-sphinx.git#egg=deconstrst"
-script:
-- deconst-preparer-sphinx
