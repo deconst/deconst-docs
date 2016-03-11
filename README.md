@@ -1,4 +1,4 @@
-[![Build Status](https://build.deconst.horse/deconst/deconst-docs/badge?branch=master)
+![Build Status](https://build.deconst.horse/deconst/deconst-docs/badge?branch=master)
 
 # Deconst documentation
 
