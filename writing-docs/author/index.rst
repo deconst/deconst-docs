@@ -110,7 +110,7 @@ Content mapping is determined by :ref:`content mapping configuration files <cont
 Previewing Changes
 ------------------
 
-As you work, you'll want to see how the content you're writing will look rendered in context with the entire site. If your content repository is using a :term:`Strider` build, each time you *open a new pull request* or *push new commits to an existing pull request*, Strider will build a preview of your work to a staging environment. Once the build is complete, a bot account will post a comment on your pull request including a link to your personal preview.
+If your content repository is using a :term:`Strider` build, each time you *open a new pull request* or *push new commits to an existing pull request*, Strider will build a preview of your work to a staging environment. Once the build is complete, a bot account will post a comment on your pull request including a link to your personal preview.
 
 While you're browsing your preview, all page links will be manipulated to keep you within your personal preview environment, so you can navigate around the full site without accidentally jumping to production.
 
