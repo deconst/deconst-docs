@@ -105,6 +105,15 @@ As you work, you can freely create new pages and directories and they will autom
 
 Content mapping is determined by :ref:`content mapping configuration files <control-map>` within the control repository. Open an issue on the control repository to discuss the addition of new content, or modify the content mapping files yourself in a pull request if you're also a site coordinator.
 
+.. _pull-request-builds:
+
+Previewing Changes
+------------------
+
+If your content repository is using a :term:`Strider` build, each time you *open a new pull request* or *push new commits to an existing pull request*, Strider will build a preview of your work to a staging environment. Once the build is complete, a bot account will post a comment on your pull request including a link to your personal preview.
+
+While you're browsing your preview, all page links will be manipulated to keep you within your personal preview environment, so you can navigate around the full site without accidentally jumping to production.
+
 .. _custom-content-integration:
 
 Custom Content Repository Integrations
