@@ -67,10 +67,12 @@ If your content repository does not meet those criteria, :ref:`integrating your 
 
      [
        { "kind": "github", "project": "deconst/deconst-docs" },
-       { "kind": "github", "project": "myorg/my-content" }
+       { "kind": "github", "project": "myorg/my-content", "branches": ["current", "next"] }
      ]
 
-   Add a new entry to the array with your project's name. Once your pull request is merged, a :term:`Strider` build will be created for your content repository, and any changes that you make to your repository from this point forward will automatically be submitted to Deconst.
+   Add a new entry to the array with your project's name. Only content pushed to the branches listed by the ``branches`` setting will be deployed to production. By default, this includes only ``"master"``.
+
+   Once your pull request is merged, a :term:`Strider` build will be created for your content repository, and any changes that you make to your repository from this point forward will automatically be submitted to Deconst.
 
 At this point, your content is being sent to Deconst, but nobody can see it yet. The next step is to work with a :ref:`coordinator <site-coordinator>` to decide on a place your content should live in the context of the larger site.
 
