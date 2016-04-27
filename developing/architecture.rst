@@ -81,13 +81,16 @@ When a change is merged into the live branch of the :term:`control repository`:
 #. Once all assets have been published, the preparer sends the latest git commit SHA of the control repository to the :term:`content service`, where it's stored in MongoDB.
 #. Each entry within the ``content-repositories.json`` file is checked against the list of :term:`strider` builds. If any new entries have been added, a content build is created and configured with a newly issued API key.
 #. During each request, each :term:`presenter` queries its linked :term:`content service` for the active control repository SHA. If it doesn't match last-loaded control repository SHA, the presenter triggers an asynchronous update.
-#. If successful, the new content and template mappings, redirects, and templates will be atomically installed. Otherwise, the presenter will log an error with the details and wait for further changes before attempting to reload.
+#. If successful, the new content and template mappings, redirects, and templates are atomically installed. Otherwise, the presenter logs an error with the details and waits for further changes before attempting to reload.
 
 Lifecycle of a Content Repository Update
 ----------------------------------------
 
 When a change is merged into the live branch of a :term:`content repository`:
 
-#. A Strider build scans the latest commit of the repository for directories containing ``_deconst.json`` files and executes the appropriate :term:`preparer` within a new Docker container that's given the context of each one.
-#. The preparer generates a :term:`metadata envelope` for each page that would be rendered, assigns it a :term:`content ID` using a configured base ID, and submits it to the :term:`content service`.
-#. Each static resource (images, mostly) are submitted to the :term:`content service` and published to the CDN as non-global assets. The response includes the CDN URL, which is then used within the generated envelopes.
+#. A Strider build scans the latest commit of the repository for directories containing ``_deconst.json`` files and executes the appropriate :term:`preparer` within a Docker container that's given each context.
+#. The preparer copies each referenced asset to an asset output directory within the shared workspace container. The offset of the asset reference is saved in an "asset_offsets" map.
+#. The preparer generates a :term:`metadata envelope` for each page that would be rendered, assigns it a :term:`content ID` using a configured base ID, and writes it to the envelope output directory.
+#. The submitter queries the :term:`content service` with the SHA-256 fingerprints of each asset in the asset directory. If any assets are missing or have changed, the submitter bulk-uploads them to the :term:`content service` API. If more than 30MB of assets need to be uploaded, assets are uploaded in batches of just over 30MB to avoid overwhelming the upload process.
+#. The submitter inserts the public CDN URLs of each asset into the body of each metadata envelope at the recorded offsets and removes the "asset_offsets" key.
+#. The submitter queries the content service with the SHA-256 fingerprint of a stable (key-sorted) representation of each envelope. Any envelopes that have been changed are bulk-uploaded to the content service.
