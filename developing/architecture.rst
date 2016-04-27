@@ -27,7 +27,7 @@ Access to Strider is managed by membership in a GitHub organization or in teams 
 
 Strider is prepopulated with a build for the instance's control repository that preprocesses and submits site-wide assets to the content service, and automatically creates new content builds based on a list in a configuration file.
 
-The asset preparer process and any content build preparer processes are run in isolated Docker containers, sharing a workspace with Strider by a data volume container.
+The asset preparer, content preparer, and submitter processes are run in isolated Docker containers, sharing a workspace with Strider by a data volume container.
 
 Components
 ----------
@@ -39,29 +39,25 @@ Components
     :term:`metadata envelopes`, each of which contains one page of rendered HTML and associated
     metadata.
 
-    If the current branch is live, the generated envelopes are then submitted to the
-    :term:`content service` for storage and indexing. Otherwise, a local :term:`presenter` is
-    invoked to complete a full build of this subtree of the final site, which is then published to
-    CDN and linked on the pull request.
-
-    There will be one preparer for each supported format of :term:`content repository`; initially,
-    Sphinx and Jekyll. The preparer will be executed by a CI/CD system on each commit to the
+    There is one preparer for each supported format of :term:`content repository`; current,
+    Sphinx and Jekyll. The preparer is executed by a CI/CD system on each commit to the
     repository.
+
+  submitter
+    Process responsible for traversing directories populated with :term:`metadata envelopes` and asset files and submitting them to the :term:`content service`. The submitter submits content and assets in bulk transactions and avoids submitting unchanged content.
 
   content service
     Service that accepts submissions and queries for the most recent :term:`metadata envelope`
-    associated with a specific :term:`content ID`. Content submitted here will have its structure
-    validated and indexed.
+    associated with a specific :term:`content ID`.
 
   presenter
-    Accept HTTP requests from users. Map the requested :term:`presented URL` to :term:`content ID`
-    using the latest known version of the content mapping within the control repository, then access the requested :term:`metadata envelope` using the :term:`content service`. Inject the envelope into an appropriate :term:`template` and send the final HTML back in an HTTP response.
+    Accepts HTTP requests from users. Maps the requested :term:`presented URL` to a :term:`content ID` using the latest known version of the content mapping within the control repository, then accesses the requested :term:`metadata envelope` using the :term:`content service`. Injects the envelope into an appropriate :term:`template` and send the final HTML back in an HTTP response.
 
   nginx
     Reverse proxy that accepts requests from off of the host, terminates TLS, and delegates to the local :term:`presenter` and :term:`content service`.
 
   strider
-    A continuous integration server integrated with Deconst to provide on-cluster preparer runs.
+    A continuous integration server integrated with Deconst to provide on-cluster preparer and submitter runs.
 
 Lifecycle of an HTTP Request
 ----------------------------
@@ -85,13 +81,16 @@ When a change is merged into the live branch of the :term:`control repository`:
 #. Once all assets have been published, the preparer sends the latest git commit SHA of the control repository to the :term:`content service`, where it's stored in MongoDB.
 #. Each entry within the ``content-repositories.json`` file is checked against the list of :term:`strider` builds. If any new entries have been added, a content build is created and configured with a newly issued API key.
 #. During each request, each :term:`presenter` queries its linked :term:`content service` for the active control repository SHA. If it doesn't match last-loaded control repository SHA, the presenter triggers an asynchronous update.
-#. If successful, the new content and template mappings, redirects, and templates will be atomically installed. Otherwise, the presenter will log an error with the details and wait for further changes before attempting to reload.
+#. If successful, the new content and template mappings, redirects, and templates are atomically installed. Otherwise, the presenter logs an error with the details and waits for further changes before attempting to reload.
 
 Lifecycle of a Content Repository Update
 ----------------------------------------
 
 When a change is merged into the live branch of a :term:`content repository`:
 
-#. A Strider build scans the latest commit of the repository for directories containing ``_deconst.json`` files and executes the appropriate :term:`preparer` within a new Docker container that's given the context of each one.
-#. The preparer generates a :term:`metadata envelope` for each page that would be rendered, assigns it a :term:`content ID` using a configured base ID, and submits it to the :term:`content service`.
-#. Each static resource (images, mostly) are submitted to the :term:`content service` and published to the CDN as non-global assets. The response includes the CDN URL, which is then used within the generated envelopes.
+#. A Strider build scans the latest commit of the repository for directories containing ``_deconst.json`` files and executes the appropriate :term:`preparer` within a Docker container that's given each context.
+#. The preparer copies each referenced asset to an asset output directory within the shared workspace container. The offset of the asset reference is saved in an "asset_offsets" map.
+#. The preparer generates a :term:`metadata envelope` for each page that would be rendered, assigns it a :term:`content ID` using a configured base ID, and writes it to the envelope output directory.
+#. The submitter queries the :term:`content service` with the SHA-256 fingerprints of each asset in the asset directory. If any assets are missing or have changed, the submitter bulk-uploads them to the :term:`content service` API. If more than 30MB of assets need to be uploaded, assets are uploaded in batches of just over 30MB to avoid overwhelming the upload process.
+#. The submitter inserts the public CDN URLs of each asset into the body of each metadata envelope at the recorded offsets and removes the "asset_offsets" key.
+#. The submitter queries the content service with the SHA-256 fingerprint of a stable (key-sorted) representation of each envelope. Any envelopes that have been changed are bulk-uploaded to the content service.
