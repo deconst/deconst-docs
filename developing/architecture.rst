@@ -27,7 +27,7 @@ Access to Strider is managed by membership in a GitHub organization or in teams 
 
 Strider is prepopulated with a build for the instance's control repository that preprocesses and submits site-wide assets to the content service, and automatically creates new content builds based on a list in a configuration file.
 
-The asset preparer process and any content build preparer processes are run in isolated Docker containers, sharing a workspace with Strider by a data volume container.
+The asset preparer, content preparer, and submitter processes are run in isolated Docker containers, sharing a workspace with Strider by a data volume container.
 
 Components
 ----------
@@ -39,14 +39,12 @@ Components
     :term:`metadata envelopes`, each of which contains one page of rendered HTML and associated
     metadata.
 
-    If the current branch is live, the generated envelopes are then submitted to the
-    :term:`content service` for storage and indexing. Otherwise, a local :term:`presenter` is
-    invoked to complete a full build of this subtree of the final site, which is then published to
-    CDN and linked on the pull request.
-
-    There will be one preparer for each supported format of :term:`content repository`; initially,
-    Sphinx and Jekyll. The preparer will be executed by a CI/CD system on each commit to the
+    There is one preparer for each supported format of :term:`content repository`; current,
+    Sphinx and Jekyll. The preparer is executed by a CI/CD system on each commit to the
     repository.
+
+  submitter
+    Process responsible for traversing directories populated with :term:`metadata envelopes` and asset files and submitting them to the :term:`content service`. The submitter submits content and assets in bulk transactions and avoids submitting unchanged content.
 
   content service
     Service that accepts submissions and queries for the most recent :term:`metadata envelope`
