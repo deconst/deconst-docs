@@ -99,9 +99,7 @@ And you're currently mapped to the ``books/example/`` subpath of *mysite.com* by
 
 As you work, you can freely create new pages and directories and they will automatically be available within that subpath.
 
-.. warning::
-
-  Currently, *deleting* pages doesn't actually remove the content from deconst. An administrator needs to remove documents from Cloud Files manually to delete content.
+Content that you delete is also automatically deleted from the site. Be careful! When you rename or delete content, you may break users' existing bookmarks or links from other sites. Consider copying the content to its new path, creating a redirect, then deleting it from its old path to avoid disrupting the site's user experience.
 
 Content mapping is determined by :ref:`content mapping configuration files <control-map>` within the control repository. Open an issue on the control repository to discuss the addition of new content, or modify the content mapping files yourself in a pull request if you're also a site coordinator.
 
