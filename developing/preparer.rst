@@ -7,7 +7,7 @@ If you want to include content from a new :term:`content repository` format, you
 
 #. Parse the markup language, configuration files, and other metadata for some content format. When possible, you should use the format's native libraries and tooling to do so.
 #. Parse the ``_deconst.json`` file. Consult the :ref:`new content repository section <adding-new-content-repository>` for its schema.
-#. Copy assets (usually images) to the directory specified by the environment variable ``ASSET_DIR``.
+#. Copy assets (usually images) to the directory specified by the environment variable ``ASSET_DIR``. It's best to preserve as much of the local directory structure as possible from the source repository, unless two assets in different subdirectories have the same filename.
 #. Use the markup to produce rendered HTML. The preparer should use a single-character placeholder for each asset URL. As it does so, it should generate a map that associates the path of each asset relative to ``ASSET_DIR`` to a collection of character offsets within the body text at which that asset is referenced.
 
    As a rule, the rendered HTML *should omit any layouts* from the content repository itself and only render the page content, unadorned. In Deconst, templates will be applied :ref:`later, from the control repository <control-template>`. This is important to ensure a consistent look and feel across many content repositories published to the same site, as well as allowing users to take advantage of presenter-implemented features like :ref:`search <control-search>`.
