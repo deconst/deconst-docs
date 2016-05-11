@@ -14,6 +14,7 @@ There are several special helpers and variables that are made available to each 
 
  * ``{{ deconst.content.envelope.body }}``: This one is very important: it'll be replaced by the actual content of the page.
  * ``{{ deconst.content.envelope.title }}``: The name of the page, if one has been provided.
+ * ``{{ deconst.content.envelope.toc }}``: The *local* table of contents for the current page, if one is available.
  * ``{{{ deconst.assets.js_xyz_url }}}``: The final https CDN URL of the JavaScript asset bundle from the "xyz" subdirectory. See :ref:`the assets section <control-template-assets>` for more details.
  * ``{{{ deconst.assets.css_xyz_url }}}``: The same thing a CSS asset bundle.
  * ``{{{ deconst.assets.image_xyz_jpg_url }}}``: The asset URL for an image asset.
