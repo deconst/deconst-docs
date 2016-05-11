@@ -112,6 +112,8 @@ The ``deconst-serial`` builder is the default. To use the single builder instead
   # OR:
   builder = 'deconst-serial'
 
+.. _deconst-default-unsearchable:
+
 deconst_default_unsearchable
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -122,8 +124,6 @@ To exclude all envelopes within a content repository from search indexing, set `
   deconst_default_unsearchable = True
 
 Notice that this may still be overridden by individual envelopes with per-page metadata.
-
-.. _deconst-default-unsearchable:
 
 deconst_categories
 ^^^^^^^^^^^^^^^^^^
