@@ -68,8 +68,8 @@ When a content consumer initiates an HTTPS request:
 #. :term:`nginx` terminates TLS and, in turn, proxies the request to its linked :term:`presenter`.
 #. The :term:`presenter` queries its content map with the :term:`presented URL` to discover the :term:`content ID` of the content that should be rendered at that path.
 #. Next, the presenter queries the :term:`content service` to acquire the content for that ID. The content service locates the appropriate :term:`metadata envelope`, all site-wide assets, and performs any necessary post-processing.
-#. Armed with the content ID and a layout key from the metadata envelope, the presenter locates the Nunjucks :term:`template` that should be used to decorate the raw content. If no template is routed, this request is skipped and a null layout (that renders the envelope's body directly) is used.
-#. Meanwhile, any "related documents" that are requested by the envelope will be queried from the :term:`content service`.
+#. If any :term:`addenda` are requested by the current envelope, each addenda envelope is fetched from the content service.
+#. The presenter locates the Nunjucks :term:`template` that should be used to decorate the raw content based on a regular expression match on the presented URL. If no template is routed, this request is skipped and a null layout (that renders the envelope's body directly) is used.
 #. The presenter renders the metadata envelope using the layout. The resulting HTML document is returned to the user.
 
 Lifecycle of a Control Repository Update
