@@ -33,6 +33,10 @@ This is an example envelope that demonstrates the full document structure, inclu
       "title": "The previous article",
       "url": "/blog/previous-article"
     },
+    "addenda": {
+      "arbitrary_name": "content-id",
+      "repository_toc": "https://github.com/deconst/deconst-docs/_toc"
+    },
     "asset_offsets": {
       "local/path/image.jpg": [23, 1456],
       "other/asset.gif": [451]
@@ -99,6 +103,9 @@ This is an example envelope that demonstrates the full document structure, inclu
       }
 
     If the ``url`` key is absolute (rooted at the document root, like ``/blog/other-post``), the presenter will re-root it based on the current mapping of the content repository. If it's relative, it will be left as-is.
+
+  addenda
+    Cross-references to related documents that should be fetched along with this envelope to be made available to the template. Each document's envelope is available as ``deconst.addenda.<name>.envelope``. Most likely, the attribute you want is ``deconst.addenda.<name>.envelope.body``.
 
   asset_offsets
     This key must only be present in the intermediate representation used to communicate between a preparer and the submitter. Its keys are local paths to asset files relative to the asset directory. Each value is an array of character offsets into ``body`` that should be replaced by the full, public URL of the asset.
