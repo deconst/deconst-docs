@@ -55,7 +55,7 @@ To exercise more control over the generated table of contents, create a file cal
 Extensions
 ----------
 
-To use extensions beyond `the ones built in to Sphinx itself <http://www.sphinx-doc.org/en/stable/extensions.html#builtin-sphinx-extensions>`_, add a ``requirements.txt`` or ``deconst-requirements.txt`` file to the directory that contains your ``conf.py`` and ``_deconst.json`` files. List the dependencies that provide the extensions you wish to use, using the `same format that pip expects <https://pip.pypa.io/en/stable/reference/pip_install/#requirements-file-format>`.
+To use extensions beyond `the ones built in to Sphinx itself <http://www.sphinx-doc.org/en/stable/extensions.html#builtin-sphinx-extensions>`_, add a ``requirements.txt`` or ``deconst-requirements.txt`` file to the directory that contains your ``conf.py`` and ``_deconst.json`` files. List the dependencies that provide the extensions you wish to use, using the `same format that pip expects <https://pip.pypa.io/en/stable/reference/pip_install/#requirements-file-format>`_.
 
 If both ``requirements.txt`` and ``deconst-requirements.txt`` are present, ``deconst-requirements.txt`` is used. This allows you to specify different dependencies for local Sphinx builds and for Deconst preparer builds if necessary.
 
