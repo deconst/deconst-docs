@@ -10,7 +10,7 @@ To build this documentation standalone, use the [Deconst client](https://github.
 
 ### DNS and TLS
 
-DNS entries for `deconst.horse`, `build.deconst.horse`, `staging.deconst.horse`, and `content.staging.deconst.horse` are managed by Cloud DNS entries in the "dse.ashwilson" account. They should be pointed to the appropriate load balancers.
+DNS entries for `deconst.horse`, `build.deconst.horse`, `staging.deconst.horse`, and `content.staging.deconst.horse` are managed by Cloud DNS entries in the "drgsites" account. They should be pointed to the appropriate load balancers.
 
 TLS certificates are currently retrieved from Let's Encrypt by a manual, downtime-inducing process. To reissue them:
 
