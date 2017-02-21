@@ -10,7 +10,7 @@ Prerequisites
 Before you can effective maintain a cluster, you'll want to verify that you have these things.
 
  * **Credentials for the cloud account** that's being used to manage the cluster's resources.
- * **SSH access to the cluster.** An administrator can arrange this by adding your GitHub username to the ``github_usernames:`` list within the cluster's ``credentials.yml`` file.
+ * **SSH access to the cluster.** You'll need to download the SSH private key used by your deconst instance and put it in `keys/{instance}.private.key` where `instance` is the name of your instance in your `credentials.yml`
  * **A clone of the deconst/deploy repository** from `GitHub <https://github.com/deconst/deploy>`_. If you monitor more than one Deconst cluster, it's helpful to have a separate clone for each and name the clone's directory after the cluster rather than just calling them all "deploy."
  * **A copy of the credentials.yml file** for the instance. Your ops team should arrange for an out-of-band mechanism to securely distribute this file and stay up to date. Put it in the root directory of your ``deconst/deploy`` clone.
 
