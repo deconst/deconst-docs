@@ -26,3 +26,30 @@ $ script/deploy \
    -e 'staging_restart=true' \
    -e 'strider_restart=true'
 ```
+
+# Deconst Dev Env in Kubernetes with Minikube
+
+These instructions will prepare and submit the content and assets for this deconst documentation in a dev env in Kubernetes with Minikube.
+
+1. Run through [Deconst Dev Env in Kubernetes with Minikube](https://github.com/deconst/presenter#deconst-dev-env-in-kubernetes-with-minikube)
+
+1. Prepare the content
+
+    ```bash
+    wget https://raw.githubusercontent.com/deconst/preparer-sphinx/master/deconst-preparer-sphinx.sh
+    chmod u+x deconst-preparer-sphinx.sh
+    ./deconst-preparer-sphinx.sh
+    ```
+
+1. Submit the content
+
+    The `CONTENT_SERVICE_APIKEY` must match the `ADMIN_APIKEY` set when [adding the content service to the dev env](https://github.com/deconst/content-service#deconst-dev-env-in-kubernetes-with-minikube).
+
+    ```bash
+    export CONTENT_SERVICE_URL=$(minikube service --url --namespace deconst content)
+    export CONTENT_SERVICE_APIKEY=$ADMIN_APIKEY
+
+    wget https://raw.githubusercontent.com/deconst/submitter/master/deconst-submitter.sh
+    chmod u+x deconst-submitter.sh
+    ./deconst-submitter.sh
+    ```
