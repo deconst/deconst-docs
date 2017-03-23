@@ -31,7 +31,7 @@ $ script/deploy \
 
 These instructions will prepare and submit the content and assets for this deconst documentation in a dev env in Kubernetes with Minikube.
 
-1. Run through [Deconst Dev Env in Kubernetes with Minikube](https://github.com/deconst/presenter#deconst-dev-env-in-kubernetes-with-minikube)
+1. If necessary, deploy the [presenter service](https://github.com/deconst/presenter#deconst-dev-env-in-kubernetes-with-minikube)
 
 1. Prepare the content
 
@@ -43,7 +43,7 @@ These instructions will prepare and submit the content and assets for this decon
 
 1. Submit the content
 
-    The `CONTENT_SERVICE_APIKEY` must match the `ADMIN_APIKEY` set when [adding the content service to the dev env](https://github.com/deconst/content-service#deconst-dev-env-in-kubernetes-with-minikube).
+    The `CONTENT_SERVICE_APIKEY` must match the `ADMIN_APIKEY` set when deploying the [content service](https://github.com/deconst/content-service#deconst-dev-env-in-kubernetes-with-minikube).
 
     ```bash
     export CONTENT_SERVICE_URL=$(minikube service --url --namespace deconst content)
@@ -53,3 +53,5 @@ These instructions will prepare and submit the content and assets for this decon
     chmod u+x deconst-submitter.sh
     ./deconst-submitter.sh
     ```
+
+1. Deploy the [deconst control repo](https://github.com/deconst/deconst-docs-control#deconst-dev-env-in-kubernetes-with-minikube)
