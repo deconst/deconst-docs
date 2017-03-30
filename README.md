@@ -33,6 +33,8 @@ These instructions will prepare and submit the content and assets for this decon
 
 1. If necessary, deploy the [presenter service](https://github.com/deconst/presenter#deconst-dev-env-in-kubernetes-with-minikube)
 
+1. Open a new shell
+
 1. Prepare the content
 
     ```bash
@@ -52,6 +54,15 @@ These instructions will prepare and submit the content and assets for this decon
     wget https://raw.githubusercontent.com/deconst/submitter/master/deconst-submitter.sh
     chmod u+x deconst-submitter.sh
     ./deconst-submitter.sh
+    ```
+
+1. Confirm the content envelopes are in mongo
+
+    ```bash
+    kubectl run --namespace deconst --rm -it mongo-cli --image=mongo:2.6 --restart=Never -- mongo mongo.deconst.svc.cluster.local
+    show dbs
+    use content
+    db.envelopes.count()
     ```
 
 1. Deploy the [deconst control repo](https://github.com/deconst/deconst-docs-control#deconst-dev-env-in-kubernetes-with-minikube)
