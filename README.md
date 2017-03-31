@@ -66,3 +66,17 @@ These instructions will prepare and submit the content and assets for this decon
     ```
 
 1. Deploy the [deconst control repo](https://github.com/deconst/deconst-docs-control#deconst-dev-env-in-kubernetes-with-minikube)
+
+1. Recreate the content DB
+
+    The content is stored in the mongo DB files at `/data/deconst/mongo` in the minikube VM. Delete the DB files and the mongo pod. Kubernetes will automatically restart the mongo pod.
+
+    ```bash
+    minikube ssh
+    sudo rm -rf /data/deconst/mongo/*
+    exit
+    MONGO_POD_NAME=$(kubectl get pods --selector name=mongo --output=jsonpath={.items..metadata.name} --namespace deconst)
+    kubectl delete po/$MONGO_POD_NAME --namespace deconst
+    ```
+
+    Now you can run through the instructions above again to prepare and submit the content.
