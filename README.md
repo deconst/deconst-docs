@@ -40,7 +40,11 @@ These instructions will prepare and submit the content and assets for this decon
     ```bash
     wget https://raw.githubusercontent.com/deconst/preparer-sphinx/master/deconst-preparer-sphinx.sh
     chmod u+x deconst-preparer-sphinx.sh
+
     ./deconst-preparer-sphinx.sh
+
+    ls _build/deconst-envelopes/
+    ls _build/deconst-assets/
     ```
 
 1. Submit the content
@@ -53,6 +57,32 @@ These instructions will prepare and submit the content and assets for this decon
 
     wget https://raw.githubusercontent.com/deconst/submitter/master/deconst-submitter.sh
     chmod u+x deconst-submitter.sh
+
+    ./deconst-submitter.sh
+    ```
+
+1. Prepare the staging content
+
+    The [staging environment](https://deconst.horse/developing/staging/) is a specially configured content service and presenter pair that allow users to preview content. Normally the Strider server will push preview content to the staging environment but this is how you would manually do it.
+
+    ```bash
+    export CONTENT_ID_BASE=https://github.com/staging/deconst/deconst-docs/
+    export ENVELOPE_DIR="_build/deconst-staging-envelopes"
+    export ASSET_DIR="_build/deconst-staging-assets"
+
+    ./deconst-preparer-sphinx.sh
+
+    ls _build/deconst-staging-envelopes/
+    ls _build/deconst-staging-assets/
+    ```
+
+1. Submit the staging content
+
+    ```bash
+    export CONTENT_SERVICE_URL=$(minikube service --url --namespace deconst staging-content)
+    export ENVELOPE_DIR="$(pwd)/_build/deconst-staging-envelopes"
+    export ASSET_DIR="$(pwd)/_build/deconst-staging-assets"
+
     ./deconst-submitter.sh
     ```
 
@@ -63,6 +93,7 @@ These instructions will prepare and submit the content and assets for this decon
     show dbs
     use content
     db.envelopes.count()
+    db.staging_envelopes.count()
     ```
 
 1. Deploy the [deconst control repo](https://github.com/deconst/deconst-docs-control#deconst-dev-env-in-kubernetes-with-minikube)
