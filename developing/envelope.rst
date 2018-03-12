@@ -3,9 +3,13 @@
 Metadata Envelope Schema
 ========================
 
-Much of the deconst system involves the manipulation of :term:`metadata envelopes`, the JSON documents produced by each :term:`preparer` that contain the actual content to render. To be presented properly, envelopes must adhere to a common schema.
+Much of the deconst system involves the manipulation of :term:`metadata
+envelopes`, the JSON documents produced by each :term:`preparer` that contain
+the actual content to render. To be presented properly, envelopes must adhere to
+a common schema.
 
-This is an example envelope that demonstrates the full document structure, including all optional fields:
+This is an example envelope that demonstrates the full document structure,
+including all optional fields:
 
 .. code-block:: json
 
@@ -46,7 +50,8 @@ This is an example envelope that demonstrates the full document structure, inclu
 .. glossary::
 
   body
-    The only required field for a valid envelope. It contains the pre-rendered HTML of the page.
+    The only required field for a valid envelope. It contains the pre-rendered
+    HTML of the page.
 
   title
     The page title or blog post name used for this document.
@@ -55,7 +60,8 @@ This is an example envelope that demonstrates the full document structure, inclu
     The table of contents for this page as a fragment of rendered HTML.
 
   content_type
-    If specified, set the Content-Type of the response containing this document. Defaults to text/html; charset=utf-8.
+    If specified, set the Content-Type of the response containing this document.
+    Defaults to text/html; charset=utf-8.
 
   author
     Name of the author who wrote this content.
@@ -64,22 +70,29 @@ This is an example envelope that demonstrates the full document structure, inclu
     A brief paragraph describing the :term:`author`.
 
   publish_date
-    Approximate timestamp on which this piece of content was published, formatted as an RFC2822 string.
+    Approximate timestamp on which this piece of content was published,
+    formatted as an RFC2822 string.
 
   tags
-    An array of content classification strings that may be normalized or supplemented with machine-generated information.
+    An array of content classification strings that may be normalized or
+    supplemented with machine-generated information.
 
   categories
-    An array of content classification strings that are explicitly user-provided and chosen from a list fixed in the control repository.
+    An array of content classification strings that are explicitly user-provided
+    and chosen from a list fixed in the control repository.
 
   keywords
     An array of terms to supplement full-text search indexing.
 
   unsearchable
-    If present and set to ``true``, this envelope will be excluded from the full-text search index. Use this for content that hasn't been :ref:`mapped <control-map>` yet or documents like RSS feeds, ``robots.txt`` files, and other site metadata.
+    If present and set to ``true``, this envelope will be excluded from the
+    full-text search index. Use this for content that hasn't been :ref:`mapped
+    <control-map>` yet or documents like RSS feeds, ``robots.txt`` files, and
+    other site metadata.
 
   disqus
-    An object that controls the inclusion of Disqus comments on the current page. If present, must be an object with the following structure:
+    An object that controls the inclusion of Disqus comments on the current
+    page. If present, must be an object with the following structure:
 
     .. code-block:: json
 
@@ -89,11 +102,16 @@ This is an example envelope that demonstrates the full document structure, inclu
         "embed": true
       }
 
-    **include** toggles the inclusion of any Disqus content at all. **short_name** is used to link to a specific Disqus account. **embed** toggles the included script between an *embedding script* that injects a Disqus comment form on this page and a *count script* that decorates links with a comment count.
+    **include** toggles the inclusion of any Disqus content at all.
+    **short_name** is used to link to a specific Disqus account. **embed**
+    toggles the included script between an *embedding script* that injects a
+    Disqus comment form on this page and a *count script* that decorates links
+    with a comment count.
 
   next
   previous
-    These objects, if included, provide navigational links to adjacent documents in a sequence. If present, must be an object with the following structure:
+    These objects, if included, provide navigational links to adjacent documents
+    in a sequence. If present, must be an object with the following structure:
 
     .. code-block:: json
 
@@ -102,15 +120,26 @@ This is an example envelope that demonstrates the full document structure, inclu
         "url": "../next-page"
       }
 
-    If the ``url`` key is absolute (rooted at the document root, like ``/blog/other-post``), the presenter will re-root it based on the current mapping of the content repository. If it's relative, it will be left as-is.
+    If the ``url`` key is absolute (rooted at the document root, like
+    ``/blog/other-post``), the presenter will re-root it based on the current
+    mapping of the content repository. If it's relative, it will be left as-is.
 
   addenda
-    Cross-references to related documents that should be fetched along with this envelope to be made available to the template. Each document's envelope is available as ``deconst.addenda.<name>.envelope``. Most likely, the attribute you want is ``deconst.addenda.<name>.envelope.body``.
+    Cross-references to related documents that should be fetched along with this
+    envelope to be made available to the template. Each document's envelope is
+    available as ``deconst.addenda.<name>.envelope``. Most likely, the attribute
+    you want is ``deconst.addenda.<name>.envelope.body``.
 
   asset_offsets
-    This key must only be present in the intermediate representation used to communicate between a preparer and the submitter. Its keys are local paths to asset files relative to the asset directory. Each value is an array of character offsets into ``body`` that should be replaced by the full, public URL of the asset.
+    This key must only be present in the intermediate representation used to
+    communicate between a preparer and the submitter. Its keys are local paths
+    to asset files relative to the asset directory. Each value is an array of
+    character offsets into ``body`` that should be replaced by the full, public
+    URL of the asset.
 
-The documents retrieved from the content store consist of the requested envelope and a number of additional attributes that are derived and injected at retrieval time. The full content document looks like this:
+The documents retrieved from the content store consist of the requested envelope
+and a number of additional attributes that are derived and injected at retrieval
+time. The full content document looks like this:
 
 .. code-block:: json
 
