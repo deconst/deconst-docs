@@ -1,3 +1,13 @@
 _build
 deconst-submitter.sh
 deconst-preparer-sphinx.sh
+
+# Ignore cruft
+.DS_Store
+*~
+.*.swp
+.bak
+/.project
+/.vscode
+# pyenv
+/.python-version
