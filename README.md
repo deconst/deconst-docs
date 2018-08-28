@@ -23,6 +23,8 @@ and `content.staging.deconst.horse` are managed by Cloud DNS entries in the
 TLS certificates are currently retrieved from Let's Encrypt by a manual,
 downtime-inducing process. To reissue them:
 
+** WARNING: Script reissuance is currently broken. Use at your own risk. **
+
 * Run `script/reissue` in your
   [deconst/deploy](https://github.com/deconst/deploy) clone to reissue and
   download the new certificates to `le_certificates/`.
