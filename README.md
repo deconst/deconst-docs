@@ -10,20 +10,22 @@ read the documentation itself at
 
 ## Building
 
-To build this documentation standalone, use the [Deconst
-client](https://github.com/deconst/client). Use the Sphinx preparer and a clone
-of `https://github.com/deconst/deconst-docs-control` as the control repository.
+To build this documentation on your local machine, use the [Deconst
+integrated build](https://github.com/deconst/integrated). Use the Sphinx preparer
+and a clone of `https://github.com/deconst/deconst-docs-control` as the control
+repository.
 
 ### DNS and TLS
 
-DNS entries for `deconst.horse`, `build.deconst.horse`, `staging.deconst.horse`,
-and `content.staging.deconst.horse` are managed by Cloud DNS entries in the
-"drgsites" account. They should be pointed to the appropriate load balancers.
+For details around the operational work for the site, please consult the ops
+runbooks. DNS entries in Rackspace Cloud DNS and should be pointed to the
+appropriate load balancers.
 
 TLS certificates are currently retrieved from Let's Encrypt by a manual,
 downtime-inducing process. To reissue them:
 
-** WARNING: Script reissuance is currently broken. Use at your own risk. **
+** WARNING: The TLS-SNI script reissuance is broken. Use the process in the ops
+runbooks to properly issue the new certs with the DNS challenge.. **
 
 * Run `script/reissue` in your
   [deconst/deploy](https://github.com/deconst/deploy) clone to reissue and
