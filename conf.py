@@ -52,7 +52,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Deconst'
-copyright = u'2015, Ash Wilson, Kyle Kelley'
+copyright = u'2015-2018, Ash Wilson, Kyle Kelley'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

@@ -7,8 +7,8 @@ comments, issues and chat.
 
 .. glossary::
 
-   content repository
-   content repositories
+  content repository
+  content repositories
      Location containing material to be included as a subset of the completed
      site. Often, the material within will be written in a friendlier
      human-editable markup format such as reStructuredText or Markdown.
