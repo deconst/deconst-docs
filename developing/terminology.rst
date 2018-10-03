@@ -31,8 +31,8 @@ comments, issues and chat.
      * Plain-text documents that associate subsets of :term:`presented URLs`
        with specific layouts.
 
-   content ID
-   content IDs
+  content ID
+  content IDs
      Unique identifier assigned to a single page of content generated from a
      :term:`content repository`. It's important to note that a content ID is
      assigned to each *output* page, not each source document. Depending on the
@@ -58,26 +58,26 @@ comments, issues and chat.
        ``https://github.com/rackerlabs/developer-blog/_posts/mongodb-3.0-getting-started.md``:
        ``https://github.com/rackerlabs/developer-blog/blog/mongodb-3.0-getting-started``.
 
-   revision ID
-   revision IDs
+  metadata envelope
+  metadata envelopes
+     JSON document that contains a single page's worth of content as a rendered
+     HTML fragment, along with any additional information necessary for the
+     presentation of that page. See :ref:`the schema section <envelope-schema>`
+     for a description of the expected structure.
+
+  revision ID
+  revision IDs
      Identifier used to isolate different staging environments from one another.
 
-   presented URL
-   presented URLs
+  presented URL
+  presented URLs
      URL of a page within the final presented content of a deconst site. This
      should be the full URL, including the scheme and domain.
 
      Example:
      ``https://developer.rackspace.com/sdks/cloud-servers/getting-started/``.
 
-   template
+  template
      Common markup that surrounds each presented page with navigation, brand
      identity, copyright information and anything else that's shared among some
      subset of each site.
-
-   metadata envelope
-   metadata envelopes
-     JSON document that contains a single page's worth of content as a rendered
-     HTML fragment, along with any additional information necessary for the
-     presentation of that page. See :ref:`the schema section <envelope-schema>`
-     for a description of the expected structure.
