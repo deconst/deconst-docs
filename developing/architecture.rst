@@ -21,12 +21,14 @@ This is how the world interacts with a Deconst cluster:
 
 .. image:: /_images/deconst-external.png
 
-None of the service containers store any internal, persistent state: the sources
-of truth for all Deconst state are Cloud Files containers, MongoDB collections,
-or GitHub repositories. This means that you can adaptively destroy or launch
-Deconst worker hosts without fear of losing information.
+None of the service containers store any internal, persistent state:
+the sources of truth for all Deconst state are Cloud Files containers,
+MongoDB collections, or GitHub repositories. This means that you can
+adaptively destroy or launch Deconst worker hosts without fear of
+losing information.
 
-Each pod includes the following arrangement of interlinked service containers:
+Each pod includes the following arrangement of interlinked service
+containers:
 
 .. image:: /_images/deconst-internal.png
 
@@ -105,17 +107,19 @@ When a content consumer initiates an HTTPS request:
    to discover the :term:`content ID` of the content that should be rendered at
    that path.
 
-#. Next, the presenter queries the :term:`content service` to acquire the
-   content for that ID. The content service locates the appropriate :term:`metadata
-   envelope`, all site-wide assets, and performs any necessary post-processing.
+#. Next, the presenter queries the :term:`content service` to acquire
+   the content for that ID. The content service locates the
+   appropriate :term:`metadata envelope`, all site-wide assets, and
+   performs any necessary post-processing.
 
 #. If any :term:`addenda` are requested by the current envelope, each addenda
    envelope is fetched from the content service.
 
-#. The presenter locates the Nunjucks :term:`template` that should be used to
-   decorate the raw content based on a regular expression match on the presented
-   URL. If no template is routed, this request is skipped and a null layout (that
-   renders the envelope's body directly) is used.
+#. The presenter locates the Nunjucks :term:`template` that should be
+   used to decorate the raw content based on a regular expression
+   match on the presented URL. If no template is routed, this request
+   is skipped and a null layout (that renders the envelope's body
+   directly) is used.
 
 #. The presenter renders the metadata envelope using the layout. The resulting
    HTML document is returned to the user.
@@ -126,54 +130,64 @@ Lifecycle of a Control Repository Update
 
 When a change is merged into the live branch of the :term:`control repository`:
 
-#. A Strider build executes the asset :term:`preparer` on the latest commit of
-   the repository. Stylesheets, javascript, images, and fonts found within the
-   ``assets`` directory are compiled, concatenated, minified, and submitted to the
-   :term:`content service` to be fingerprinted, stored on the CDN-enabled asset
-   container, and made available as global assets to all metadata envelopes.
+#. A Strider build executes the asset :term:`preparer` on the latest
+   commit of the repository. Stylesheets, javascript, images, and
+   fonts found within the ``assets`` directory are compiled,
+   concatenated, minified, and submitted to the :term:`content service`
+   to be fingerprinted, stored on the CDN-enabled asset container,
+   and made available as global assets to all metadata envelopes.
 
-#. Once all assets have been published, the preparer sends the latest git commit
-   SHA of the control repository to the :term:`content service`, where it's stored
-   in MongoDB.
+#. Once all assets have been published, the preparer sends the latest
+   git commit SHA of the control repository to the
+   :term:`content service`, where it's stored in MongoDB.
 
-#. Each entry within the ``content-repositories.json`` file is checked against
-   the list of :term:`strider` builds. If any new entries have been added, a
-   content build is created and configured with a newly issued API key.
+#. Each entry within the ``content-repositories.json`` file is checked
+   against the list of :term:`strider` builds. If any new entries have
+   been added, a content build is created and configured with a newly
+   issued API key.
 
-#. During each request, each :term:`presenter` queries its linked :term:`content
-   service` for the active control repository SHA. If it doesn't match last-loaded
-   control repository SHA, the presenter triggers an asynchronous update.
+#. During each request, each :term:`presenter` queries its linked
+   :term:`content service` for the active control repository SHA. If
+   it doesn't match last-loaded control repository SHA, the presenter
+   triggers an asynchronous update.
 
-#. If successful, the new content and template mappings, redirects, and
-   templates are atomically installed. Otherwise, the presenter logs an error with
-   the details and waits for further changes before attempting to reload.
+#. If successful, the new content and template mappings, redirects,
+   and templates are atomically installed. Otherwise, the presenter
+   logs an error with the details and waits for further changes before
+   attempting to reload.
+
 
 Lifecycle of a Content Repository Update
 ----------------------------------------
 
-When a change is merged into the live branch of a :term:`content repository`:
+When a change is merged into the live branch of a :term:`content
+repository`:
 
-#. A Strider build scans the latest commit of the repository for directories
-   containing ``_deconst.json`` files and executes the appropriate :term:`preparer`
-   within a Docker container that's given each context.
+#. A Strider build scans the latest commit of the repository for
+   directories containing ``_deconst.json`` files and executes the
+   appropriate :term:`preparer` within a Docker container that's given
+   each context.
 
-#. The preparer copies each referenced asset to an asset output directory within
-   the shared workspace container. The offset of the asset reference is saved in an
-   "asset_offsets" map.
+#. The preparer copies each referenced asset to an asset output
+   directory within the shared workspace container. The offset of the
+   asset reference is saved in an "asset_offsets" map.
 
-#. The preparer generates a :term:`metadata envelope` for each page that would
-   be rendered, assigns it a :term:`content ID` using a configured base ID, and
-   writes it to the envelope output directory.
+#. The preparer generates a :term:`metadata envelope` for each page
+   that would be rendered, assigns it a :term:`content ID` using a
+   configured base ID, and writes it to the envelope output directory.
 
 #. The submitter queries the :term:`content service` with the SHA-256
-   fingerprints of each asset in the asset directory. If any assets are missing or
-   have changed, the submitter bulk-uploads them to the :term:`content service`
-   API. If more than 30MB of assets need to be uploaded, assets are uploaded in
-   batches of just over 30MB to avoid overwhelming the upload process.
+   fingerprints of each asset in the asset directory. If any assets
+   are missing or have changed, the submitter bulk-uploads them to the
+   :term:`content service` API. If more than 30MB of assets need to be
+   uploaded, assets are uploaded in batches of just over 30MB to avoid
+   overwhelming the upload process.
 
-#. The submitter inserts the public CDN URLs of each asset into the body of each
-   metadata envelope at the recorded offsets and removes the "asset_offsets" key.
+#. The submitter inserts the public CDN URLs of each asset into the
+   body of each metadata envelope at the recorded offsets and removes
+   the "asset_offsets" key.
 
-#. The submitter queries the content service with the SHA-256 fingerprint of a
-   stable (key-sorted) representation of each envelope. Any envelopes that have
-   been changed are bulk-uploaded to the content service.
+#. The submitter queries the content service with the SHA-256
+   fingerprint of a stable (key-sorted) representation of each
+   envelope. Any envelopes that have been changed are bulk-uploaded to
+   the content service.
