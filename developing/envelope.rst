@@ -3,13 +3,13 @@
 Metadata Envelope Schema
 ========================
 
-Much of the deconst system involves the manipulation of :term:`metadata
-envelopes`, the JSON documents produced by each :term:`preparer` that contain
-the actual content to render. To be presented properly, envelopes must adhere to
-a common schema.
+Much of the deconst system involves the manipulation of
+:term:`metadata envelopes`, the JSON documents produced by each
+:term:`preparer` that contain the actual content to render. To be
+presented properly, envelopes must adhere to a common schema.
 
-This is an example envelope that demonstrates the full document structure,
-including all optional fields:
+This is an example envelope that demonstrates the full document
+structure, including all optional fields:
 
 .. code-block:: json
 
@@ -137,9 +137,10 @@ including all optional fields:
     character offsets into ``body`` that should be replaced by the full, public
     URL of the asset.
 
-The documents retrieved from the content store consist of the requested envelope
-and a number of additional attributes that are derived and injected at retrieval
-time. The full content document looks like this:
+The documents retrieved from the content store consist of the
+requested envelope and a number of additional attributes that are
+derived and injected at retrieval time. The full content document
+looks like this:
 
 .. code-block:: json
 

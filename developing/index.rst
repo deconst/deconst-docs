@@ -8,9 +8,9 @@ like "content IDs" and "presented URLs".
 
 .. toctree::
 
-  setup
-  terminology
-  architecture
-  preparer
-  staging
-  envelope
+   setup
+   terminology
+   architecture
+   preparer
+   staging
+   envelope

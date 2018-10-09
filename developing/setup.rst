@@ -34,13 +34,14 @@ to shave the yak for Docker itself.
       Git commit (server): 7c8fca2
       OS/Arch (server): linux/amd64
 
-#. We also use Docker Compose to orchestrate small numbers of local containers
-   to make development more convenient. Follow the `installation guide for Docker
-   Compose <https://docs.docker.com/compose/install/>`_.
+#. We also use Docker Compose to orchestrate small numbers of local
+   containers to make development more convenient. Follow the
+   `installation guide for Docker Compose
+   <https://docs.docker.com/compose/install/>`_.
 
-#. To contribute, you'll also need a reasonable `git <https://git-scm.com/>`_
-   client. It's likely that you already have one: open a terminal and type ``git
-   version`` to check.
+#. To contribute, you'll also need a reasonable `git
+   <https://git-scm.com/>`_ client. It's likely that you already have
+   one: open a terminal and type ``git version`` to check.
 
 Individual Service Development
 ------------------------------
@@ -56,12 +57,13 @@ clone:
 
    docker-compose up
 
-Compose will launch a container for the service you're focusing on right now, as
-well as any upstream services or infrastructure that it depends on, and link
-them all together correctly. You'll see the combined logs for all containers on
-your terminal. As you edit source code in your editor of choice, the service
-within the container will automatically reload with your changes, so you can
-explore the effects live.
+Compose will launch a container for the service you're focusing on
+right now, as well as any upstream services or infrastructure that it
+depends on, and link them all together correctly. You'll see the
+combined logs for all containers on your terminal. As you edit source
+code in your editor of choice, the service within the container will
+automatically reload with your changes, so you can explore the effects
+live.
 
 .. note::
 
@@ -72,12 +74,13 @@ explore the effects live.
    installed docker. For example, if you're using ``docker-machine``, running
    ``docker-machine ip dev`` will show you the IP.
 
-Although your local source changes will take effect immediately, you may need to
-periodically fetch newer versions of upstream containers, as development
-progresses on the other parts of the system. To ensure that you have the latest
-builds of each container, run ``docker-compose pull``. Also, if you need to
-change the service's dependencies, you may need to rebuild your working
-container with ``docker-compose build``.
+Although your local source changes will take effect immediately, you
+may need to periodically fetch newer versions of upstream containers,
+as development progresses on the other parts of the system. To ensure
+that you have the latest builds of each container, run
+``docker-compose pull``. Also, if you need to change the service's
+dependencies, you may need to rebuild your working container with
+``docker-compose build``.
 
 Compose can also be used to launch its containers in the background (with
 ``docker-compose up -d``), explore logs for individual containers rather than
@@ -85,9 +88,9 @@ aggregated, or run one-off processes in the context of any service container.
 Consult the `compose documentation <https://docs.docker.com/compose/cli/>`_ to
 see all of your options.
 
-Each service's unit tests can also be executed within a Docker container for
-convenience. As a convention, the following script will launch the container and
-run all tests:
+Each service's unit tests can also be executed within a Docker
+container for convenience. As a convention, the following script will
+launch the container and run all tests:
 
 .. code-block:: bash
 
@@ -96,10 +99,10 @@ run all tests:
 Integration Testing
 -------------------
 
-To verify that the entire Deconst system works together, use the **integrated**
-repository. "Integrated" contains a compose file that executes a single "pod" of
-related deconst services on your local host, so you can test all of the services
-together.
+To verify that the entire Deconst system works together, use the
+**integrated** repository. "Integrated" contains a compose file that
+executes a single "pod" of related deconst services on your local
+host, so you can test all of the services together.
 
 Clone the deconst/integrated repository and run ``script/up`` to begin:
 
