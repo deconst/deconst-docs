@@ -19,7 +19,8 @@ additional worker hosts and by starting a greater number of pods on each host.
 
 This is how the world interacts with a Deconst cluster:
 
-.. image:: /_images/deconst-external.png
+.. image:: /_images/deconst-architecture.png
+   :alt: A diagram of the overall Deconst architecture
 
 None of the service containers store any internal, persistent state:
 the sources of truth for all Deconst state are Cloud Files containers,
@@ -31,6 +32,7 @@ Each pod includes the following arrangement of interlinked service
 containers:
 
 .. image:: /_images/deconst-internal.png
+   :alt: A diagram of interlinked services
 
 On the build host, a dedicated `Strider CD
 <https://github.com/Strider-CD/strider>`_ continuous integration server manages
@@ -39,6 +41,7 @@ service containers that act as a :ref:`staging environment <staging>` that can
 be used to preview content in context before it's merged and shipped.
 
 .. image:: /_images/deconst-build.png
+   :alt: A diagram of the Deconst build host
 
 Access to Strider is managed by membership in a GitHub organization or in teams
 within an organization, as configured in the instance's credentials file.
@@ -83,6 +86,10 @@ Components
     :term:`metadata envelope` using the :term:`content service`. Injects the
     envelope into an appropriate :term:`template` and send the final HTML back
     in an HTTP response.
+
+    .. image:: ../_images/deconst-presenter.png
+       :scale: 90 %
+       :alt: A diagram of the Deconst presenter service
 
   nginx
     Reverse proxy that accepts requests from off of the host, terminates TLS,
@@ -159,6 +166,10 @@ When a change is merged into the live branch of the :term:`control repository`:
 
 Lifecycle of a Content Repository Update
 ----------------------------------------
+
+.. image:: /_images/content-repo-update-lifecycle.png
+   :alt: A diagram of the content repository update lifecycle
+
 
 When a change is merged into the live branch of a :term:`content
 repository`:
